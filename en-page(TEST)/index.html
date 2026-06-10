@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork Message</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 15px;
+            text-align: center;
+            
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.5s ease;
+        }
+        #quote-container {
+            background: rgba(255, 255, 255, 0.75);
+            padding: 35px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .lang-block {
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        .lang-english {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            word-break: break-word;
+        }
+
+        /* Action Button Styles */
+        #action-btn {
+            margin-top: 25px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #0076ff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,118,255,0.3);
+            transition: all 0.2s ease;
+            width: 80%;
+            max-width: 250px;
+        }
+        #action-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Form Styles */
+        #message-form-container {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Input & Textarea Styles */
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
+        textarea {
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+
+        #submit-btn {
+            padding: 10px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #10b981;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(16,185,129,0.3);
+            transition: all 0.2s ease;
+        }
+        #submit-btn:active {
+            transform: scale(0.95);
+            background-color: #059669;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="quote-container">
+        <div id="content-body">Loading...</div>
+        
+        <button id="action-btn" onclick="toggleForm()">💌 Send Gratitude Message</button>
+
+        <div id="message-form-container">
+            <form id="thank-you-form" method="POST">
+                <input type="text" name="bukai" placeholder="District (Optional)">
+                <input type="text" name="kei" placeholder="Lineage (Optional)">
+                <input type="text" name="name" placeholder="Name (Optional)">
+                
+                <textarea name="message" rows="4" placeholder="Enter your message here..." required></textarea>
+                <br>
+                <button type="submit" id="submit-btn">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ご指定いただいた4つの英語メッセージと背景画像の組み合わせ
+        const quotesData = [
+            {
+                en: "The buddhas are always with us, right by our side. Close your eyes and remember this whenever you are feeling low or facing difficulties in your life.",
+                image: "bg1.jpg"
+            },
+            {
+                en: "Buddha lies in everyone's heart. We all want to be kind, helpful, and truthful in some way. Whenever we feel like this, we discover a buddha in our own hearts.",
+                image: "bg2.jpg"
+            },
+            {
+                en: "Your heart shines each time you feel gratitude.",
+                image: "bg3.jpg"
+            },
+            {
+                en: "Never think, \"I have nothing to offer!\" The buddhas and many others count on you. Look forward and think positively. Just do your best, and you'll have no regrets.",
+                image: "bg4.jpg"
+            }
+        ];
+
+        window.onload = function() {
+            try {
+                const randomIndex = Math.floor(Math.random() * quotesData.length);
+                const selectedSet = quotesData[randomIndex];
+                
+                // 背景画像を設定（1つ上の階層の画像を指定）
+                document.body.style.backgroundImage = `url('../${selectedSet.image}')`;
+                
+                let htmlContent = "";
+                if(selectedSet.en) htmlContent += `<div class="lang-block lang-english">${selectedSet.en}</div>`;
+                
+                document.getElementById("content-body").innerHTML = htmlContent;
+            } catch (error) {
+                alert("Loading Error");
+                console.error("Error details:", error);
+            }
+        };
+
+        function toggleForm() {
+            const formContainer = document.getElementById('message-form-container');
+            const actionBtn = document.getElementById('action-btn');
+            formContainer.style.display = 'block';
+            actionBtn.style.display = 'none';
+        }
+
+        // 送信処理（最新のJSON流派 ＋ 言語スタンプ自動追加）
+        const form = document.getElementById('thank-you-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.innerText = "Sending...";
+            submitBtn.disabled = true;
+
+            const formData = new FormData(form);
+            formData.append("lang", "En"); // ★自動でスプレッドシートに「En」と入るおまじない
+
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            // ★【重要】ここにいつものGASのURLを貼り付けてください！
+            const gasUrl = 'https://script.google.com/macros/s/AKfycbyG_zASneceAHfO8n3en4w5-JH94hHJfx8mQAZzdxXqRjYZAaVtfvkdz11kbK0MYP9y/exec';
+
+            fetch(gasUrl, {
+                method: 'POST',
+                body: json
+            })
+            .then(async (response) => {
+                let res = await response.json();
+                if (res.status === "success") {
+                    alert("Thank you! Your message has been sent successfully.");
+                    form.reset();
+                    document.getElementById('message-form-container').style.display = 'none';
+                    
+                    const actionBtn = document.getElementById('action-btn');
+                    actionBtn.innerText = "💌 Message Sent";
+                    actionBtn.style.display = 'inline-block';
+                    actionBtn.disabled = true;
+                    actionBtn.style.backgroundColor = "#ccc";
+                    actionBtn.style.boxShadow = "none";
+                } else {
+                    alert("Transmission failed: " + (res.message || "Unknown error"));
+                    submitBtn.innerText = "Send";
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch((error) => {
+                alert("Transmission failed. Please try again later.");
+                console.error(error);
+                submitBtn.innerText = "Send";
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+
+</body>
+</html>

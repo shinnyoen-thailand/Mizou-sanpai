@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artwork Message</title>
+    <title>Welcome</title>
     <style>
         body {
             display: flex;
@@ -12,204 +12,80 @@
             height: 100vh;
             font-family: sans-serif;
             margin: 0;
-            padding: 15px;
+            background-color: #f4f4f9;
             text-align: center;
-            
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: background-image 0.5s ease;
         }
-        #quote-container {
-            background: rgba(255, 255, 255, 0.75);
-            padding: 35px 20px;
+        .container {
+            background: white;
+            padding: 40px 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 350px;
             width: 100%;
             box-sizing: border-box;
-            max-height: 90vh;
-            overflow-y: auto;
         }
-        
-        .lang-block {
-            margin-bottom: 0;
-            line-height: 1.7;
-        }
-
-        .lang-japanese {
-            font-size: 18px;
-            font-weight: bold;
+        h1 {
+            font-size: 20px;
             color: #333;
-            word-break: break-word;
+            margin-bottom: 25px;
         }
-
-        /* Action Button Styles */
-        #action-btn {
-            margin-top: 25px;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: bold;
-            background-color: #0076ff;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,118,255,0.3);
-            transition: all 0.2s ease;
-            width: 80%;
-            max-width: 250px;
-        }
-        #action-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Form Styles */
-        #message-form-container {
-            display: none;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Input & Textarea Styles */
-        input[type="text"], textarea {
+        .lang-btn {
+            display: block;
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-            margin-bottom: 12px;
-            font-family: inherit;
-        }
-        textarea {
-            resize: vertical;
-            margin-bottom: 15px;
-        }
-
-        #submit-btn {
-            padding: 10px 30px;
+            padding: 12px;
+            margin: 12px 0;
             font-size: 16px;
             font-weight: bold;
-            background-color: #10b981;
+            text-decoration: none;
             color: white;
-            border: none;
             border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(16,185,129,0.3);
             transition: all 0.2s ease;
+            box-sizing: border-box;
         }
-        #submit-btn:active {
-            transform: scale(0.95);
-            background-color: #059669;
+        .lang-btn:active {
+            transform: scale(0.98);
+        }
+        .btn-jp { background-color: #ff3b30; box-shadow: 0 4px 10px rgba(255,59,48,0.3); }
+        .btn-en { background-color: #0076ff; box-shadow: 0 4px 10px rgba(0,118,255,0.3); }
+        .btn-th { background-color: #34c759; box-shadow: 0 4px 10px rgba(52,199,89,0.3); }
+        
+        .loading-text {
+            font-size: 14px;
+            color: #8e8e93;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div id="quote-container">
-        <div id="content-body">Loading...</div>
+    <div class="container">
+        <h1>Select Your Language</h1>
         
-        <button id="action-btn" onclick="toggleForm()">💌 感謝のメッセージを送る</button>
-
-        <div id="message-form-container">
-            <form id="thank-you-form" method="POST">
-                <input type="text" name="bukai" placeholder="部会（任意）">
-                <input type="text" name="kei" placeholder="経（任意）">
-                <input type="text" name="name" placeholder="お名前（任意）">
-                
-                <textarea name="message" rows="4" placeholder="メッセージを入力してください..." required></textarea>
-                <br>
-                <button type="submit" id="submit-btn">送信</button>
-            </form>
-        </div>
+        <a href="./jp-page(TEST)/" class="lang-btn btn-jp">日本語 (Japanese)</a>
+        <a href="./en-page(TEST)/" class="lang-btn btn-en">English</a>
+        <a href="./th-page(TEST)/" class="lang-btn btn-th">ภาษาไทย (Thai)</a>
+        
+        <div class="loading-text">Detecting language...</div>
     </div>
 
     <script>
-        // 日本語メッセージ（4パターン）と背景画像の組み合わせ
-        const quotesData = [
-            {
-                jp: "仏様はいつも私たちのそばにいます。落ち込んだり、人生の壁にぶつかったりした時は、そっと目を閉じてこのことを思い出してください。",
-                image: "bg1.jpg"
-            },
-            {
-                jp: "仏様はみんなの心の中にいます。親切でありたい、人を助けたい、誠実でありたいと願うその優しい心の中に、いつでも仏様はいらっしゃいます。",
-                image: "bg2.jpg"
-            },
-            {
-                jp: "感謝の心を持つたびに、あなたの心は美しく輝きます。",
-                image: "bg3.jpg"
-            },
-            {
-                jp: "「自分には何もあげるものがない」なんて決して思わないでください。仏様も、多くの人もあなたを信じています。前を向いて、今できる最善を尽くしていきましょう。",
-                image: "bg4.jpg"
-            }
-        ];
-
+        // 💡アクセスした人のブラウザ・スマホの言語を自動判定してジャンプします
         window.onload = function() {
-            try {
-                const randomIndex = Math.floor(Math.random() * quotesData.length);
-                const selectedSet = quotesData[randomIndex];
-                
-                // 背景画像を設定（1つ上の階層の画像を指定）
-                document.body.style.backgroundImage = `url('../${selectedSet.image}')`;
-                
-                let htmlContent = "";
-                if(selectedSet.jp) htmlContent += `<div class="lang-block lang-japanese">${selectedSet.jp}</div>`;
-                
-                document.getElementById("content-body").innerHTML = htmlContent;
-            } catch (error) {
-                alert("Loading Error");
-                console.error("Error details:", error);
-            }
-        };
-
-        function toggleForm() {
-            const formContainer = document.getElementById('message-form-container');
-            const actionBtn = document.getElementById('action-btn');
-            formContainer.style.display = 'block';
-            actionBtn.style.display = 'none';
-        }
-
-        // 送信処理（JSON形式 ＋ 言語スタンプ自動追加）
-        const form = document.getElementById('thank-you-form');
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+            const userLang = navigator.language || navigator.userLanguage;
             
-            const submitBtn = document.getElementById('submit-btn');
-            if (submitBtn) {
-                submitBtn.innerText = "Sending...";
-                submitBtn.disabled = true;
-            }
+            // 0.3秒だけ選択画面を見せたあと、自動で各フォルダへジャンプ
+            setTimeout(() => {
+                if (userLang.includes('ja')) {
+                    window.location.href = "./jp-page(TEST)/";
+                } else if (userLang.includes('th')) {
+                    window.location.href = "./th-page(TEST)/";
+                } else {
+                    // 日本語・タイ語以外はすべて英語ページへ
+                    window.location.href = "./en-page(TEST)/";
+                }
+            }, 300);
+        };
+    </script>
 
-            const formData = new FormData(form);
-            formData.append("lang", "JP"); // ★自動でスプレッドシートに「JP」と入るおまじない
-
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
-
-            // ★【重要】ここにいつものGASのURLを貼り付けてください！
-            const gasUrl = 'https://script.google.com/macros/s/AKfycbyG_zASneceAHfO8n3en4w5-JH94hHJfx8mQAZzdxXqRjYZAaVtfvkdz11kbK0MYP9y/exec';
-
-            fetch(gasUrl, {
-                method: 'POST',
-                body: json
-            })
-            .then(async (response) => {
-                let res = await response.json();
-                if (res.status === "success") {
-                    alert("Thank you! Your message has been sent successfully.");
-                    form.reset();
-                    
-                    const formContainer = document.getElementById('message-form-container');
-                    if (formContainer) formContainer.style.display = 'none';
-                    
-                    const actionBtn = document.getElementById('action-btn');
-                    if (actionBtn) {
-                        actionBtn.innerText = "💌 Message Sent";
-                        actionBtn.style.display = 'inline-block';
-                        actionBtn.disabled =
+</body>
+</html>

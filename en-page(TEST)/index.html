@@ -97,7 +97,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('../外観.jpg'); /* 背景に写真を設定 */
+            background-image: url('../外観.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -110,21 +110,45 @@
             box-sizing: border-box;
         }
         
-        /* ✨ Welcome! の文字部分だけの透かし（半透明）ボックス */
+        /* 🌈 CSSだけで実現する「虹色グラデーション枠」＋「白の透かしボックス」 */
         .modal-title {
-            font-size: 26px;
+            position: relative;
+            font-size: 22px; /* 画面に収まりやすくするため少しだけ調整 */
             font-weight: bold;
             margin-bottom: 35px;
             text-align: center;
             color: #2c3e50;
             line-height: 1.5;
-            background: rgba(255, 255, 255, 0.82); /* 白の82%すかし背景 */
-            padding: 18px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            width: 85%;
-            max-width: 360px;
+            
+            /* ✨ 横幅の調整と、🌸を絶対に改行させない魔法の設定 */
+            width: 95%;
+            max-width: 365px;
+            white-space: nowrap; /* これで1行に強制ロックします */
+            padding: 20px 10px;
             box-sizing: border-box;
+            z-index: 1;
+            display: inline-block;
+        }
+        
+        /* 💡 【裏技】文字のすぐ後ろにCSSで虹色のグラデーション層を敷く */
+        .modal-title::before {
+            content: "";
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px; /* 4px分だけ外にはみ出させて枠線にする */
+            background: linear-gradient(45deg, #ff3366, #ff9933, #ffff33, #33cc66, #3399ff, #9933ff);
+            border-radius: 16px;
+            z-index: -2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+        
+        /* 💡 【裏技】さらにその上に重なる「白の透かし（半透明）」の層 */
+        .modal-title::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.88); /* 88%の白すかし */
+            border-radius: 12px;
+            z-index: -1;
         }
         
         .modal-btn-group {
@@ -146,7 +170,7 @@
         }
         .modal-btn:active { transform: scale(0.97); }
         .btn-member { background-color: #2ecc71; color: white; }
-        .btn-nonmember { background-color: #7f8c8d; color: white; } /* Visitor用に少し濃いめのグレーに調整 */
+        .btn-nonmember { background-color: #7f8c8d; color: white; } 
     </style>
 </head>
 <body>
@@ -201,14 +225,12 @@
             { en: "Doing good deeds may require conscious effort at first<br>to keep it going. As you keep telling yourself over and over,<br>doing good will naturally become a \"habit.\"<br>At that moment, you will find a wonderful version of yourself.", image: "bg23.jpg" }
         ];
 
-        // 💡 GASの最新ウェブアプリURLをここに貼り付けます
         const gasUrl = 'https://script.google.com/macros/s/AKfycbxSs7W8iExTpinl4idbsVH2ltGxIT1m6MA87QLekHhAGVlf5nuwgqmp0ZI0RqFF_gAi/exec';
 
         let selectedMemberStatus = "Unknown"; 
 
         window.onload = function() {
             try {
-                // 【テストモード】毎回ポップアップが出ます
                 document.getElementById("statusModal").style.display = "flex";
 
                 const randomIndex = Math.floor(Math.random() * quotesData.length);

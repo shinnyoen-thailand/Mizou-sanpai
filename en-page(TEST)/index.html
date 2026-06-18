@@ -232,12 +232,8 @@
                 const today = new Date().toISOString().split('T')[0];
                 const lastVisitDate = localStorage.getItem('lastVisitDate_EN');
                 
-                // Show pop-up only if this is the first access today for English page
-                if (lastVisitDate !== today) {
-                    document.getElementById("statusModal").style.display = "flex";
-                } else {
-                    document.getElementById("statusModal").style.display = "none";
-                }
+                // 🛠️ 【Test Mode】Force pop-up to show every single time for testing
+                document.getElementById("statusModal").style.display = "flex";
                 // -----------------------------------------------------------
 
                 const randomIndex = Math.floor(Math.random() * quotesData.length);

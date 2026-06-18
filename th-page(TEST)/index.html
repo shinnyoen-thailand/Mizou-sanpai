@@ -25,7 +25,7 @@
             padding: 35px 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            max-width: 600px;
+            max-width: 390px; 
             width: 100%;
             box-sizing: border-box;
             max-height: 90vh;
@@ -34,17 +34,17 @@
         
         .lang-block {
             margin-bottom: 0;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         .lang-thai {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #333;
             word-break: break-word;
         }
 
-        /* Action Button Styles */
+        /* Action Button Style */
         #action-btn {
             margin-top: 25px;
             padding: 12px 24px;
@@ -64,7 +64,7 @@
             transform: scale(0.95);
         }
 
-        /* Form Styles */
+        /* Form Style */
         #message-form-container {
             display: none;
             margin-top: 20px;
@@ -75,7 +75,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Input & Textarea Styles */
+        /* Input Style */
         input[type="text"], textarea {
             width: 100%;
             padding: 12px 15px;
@@ -112,17 +112,17 @@
 <body>
 
     <div id="quote-container">
-        <div id="content-body">Loading...</div>
+        <div id="content-body">กำลังโหลด...</div>
         
         <button id="action-btn" onclick="toggleForm()">💌 ส่งข้อความขอบคุณ</button>
 
         <div id="message-form-container">
             <form id="thank-you-form" method="POST">
-                <input type="text" name="bukai" placeholder="ภาค / District (Optional)">
-                <input type="text" name="kei" placeholder="สาย / Lineage (Optional)">
-                <input type="text" name="name" placeholder="ชื่อ / Name (Optional)">
+                <input type="text" name="bukai" placeholder="ฝ่าย / แผนก (ถ้ามี)">
+                <input type="text" name="kei" placeholder="กลุ่ม / หน่วยงาน (ถ้ามี)">
+                <input type="text" name="name" placeholder="ชื่อ (ถ้ามี)">
                 
-                <textarea name="message" rows="4" placeholder="พิมพ์ข้อความของคุณที่นี่... / Enter your message..." required></textarea>
+                <textarea name="message" rows="4" placeholder="กรุณากรอกข้อความของคุณ..." required></textarea>
                 <br>
                 <button type="submit" id="submit-btn">ส่งข้อความ</button>
             </form>
@@ -130,32 +130,56 @@
     </div>
 
     <script>
-        // Data Configuration (4つのタイ語メッセージと画像の組み合わせ)
+        // 💡 23 Inspirational Messages (Thai Version)
         const quotesData = [
-            {
-                th: "「これは自分には難しい…」と、<br>できないことを数えて<br>暗くなるのではなく、<br>「これだったらできる」ということを<br>見出し、数えて、一つひとつ実践することです。<br>社会で、学校で、家庭で、あなただから<br>できることが、必ずあるのです。<br>その「できること」を増やすこと。<br>それによって人生は変わります。",
-                image: "bg1.jpg"
-            },
-            {
-                th: "พระพุทธองค์ทรงสถิตอยู่ในจิตใจของทุกคน พวกเราทุกคนล้วนปรารถนาจะมีจิตใจที่ดีงาม ช่วยเหลือผู้อื่น และมีความจริงใจ เมื่อใดก็ตามที่เรามีความรู้สึกดีๆ เช่นนี้ เราจะได้พบพระพุทธองค์ที่อยู่ในจิตใจของเรา",
-                image: "bg2.jpg"
-            },
-            {
-                th: "อย่าคิดว่า “ฉันไม่มีอะไรจะมอบให้ใคร” พระพุทธองค์และอีกหลายคนเชื่อมั่นในตัวคุณ มองไปข้างหน้าและคิดในแง่บวก ทำใจให้ดีที่สุด และคุณจะไม่เสียใจ",
-                image: "bg3.jpg"
-            },
-            {
-                th: "หัวใจของเราเปล่งประกายทุกครั้งที่มีความรู้สึกกตัญญู",
-                image: "bg4.jpg"
-            }
+            { th: "พระพุทธองค์อยู่กับเราเสมอ อยู่เคียงข้างเราเสมอ<br>นั่นคือพระพุทธองค์ เมื่อใดที่รู้สึกทุกข์ใจ เศร้าใจ<br>หรือเริ่มหมดความมั่นใจ<br>ขอให้หลับตาลงแล้วระลึกไว้ว่า<br>ตัวเรานั้นอยู่ร่วมกับพระพุทธองค์เสมอ", image: "bg1.jpg" },
+            { th: "ฉันได้รับรู้ถึง \"หัวใจ\" ของพระพุทธองค์ผ่านความเมตตาของคุณ ขอบคุณนะ", image: "bg2.jpg" },
+            { th: "การพูดคุยสื่อสารเป็นสิ่งสำคัญมาก ไม่ว่าจะด้วยคำพูดหรือท่าทาง<br>\"สวัสดีตอนเช้า\" \"สวัสดีตอนบ่าย\"<br><br>มาเริ่มจากการทักทายกันก่อนนะ", image: "bg3.jpg" },
+            { th: "การที่คิดว่า \"จะพยายาม\" นั้นเป็นสิ่งที่ดีเลิศมากเลยนะ<br>แต่ถ้าหักโหมในทันทีก็อาจจะเหนื่อยล้าได้<br>อย่าฝืนเลย ค่อยเป็นค่อยไป<br>ลองเริ่มจากสิ่งที่เราทำได้ก่อนดีไหม", image: "bg4.jpg" },
+            { th: "พระพุทธองค์สถิตอยู่ภายในใจของทุกคน<br>ความรู้สึกที่อยากจะเมตตา อยากช่วยเหลือ หรืออยากซื่อสัตย์<br>คุณเองก็มีหัวใจแบบนั้นอยู่บ้างใช่ไหมล่ะ<br>ความรู้สึก \"เล็ก ๆ\" นั้นแหละ คือพระพุทธองค์องค์น้อยในใจคุณ", image: "bg5.jpg" },
+            { th: "คนที่รู้จักทบทวนและสำนึกในความผิดของตนเอง<br>คือผู้ที่มีจิตใจที่งดงาม", image: "bg6.jpg" },
+            { th: "การดูแลรูปลักษณ์ภายนอกให้สะอาดงดงามเป็นสิ่งที่ดีมาก<br>และหากเพิ่มคำพูดและท่าทางที่กลั่นมาจากใจเข้าไปด้วยแล้ว<br>คุณก็จะยิ่งงดงามมากขึ้นไปอีก", image: "bg7.jpg" },
+            { th: "ดูมีความสุข ดูซื่อตรง ดูมีน้ำใจและอ่อนโยน—\"คนนั้นเป็นคนดีจังเลยนะ\"<br>ข้อดีเหล่านั้นต้องมีอยู่ในตัวคุณอย่างแน่นอน<br>เพราะเราทุกคนต่างก็มีสิ่งพิเศษในตัวเอง", image: "bg8.jpg" },
+            { th: "การที่คิดอยากจะพยายาม หรืออยากทำให้ดีขึ้น<br>แค่นั้นก็ถือเป็น \"ความสุข\" แล้ว", image: "bg9.jpg" },
+            { th: "บางครั้งก็มีเรื่องที่อยากจะถอนหายใจยาว ๆ ใช่ไหมล่ะ<br>ฉันเองก็เป็นเหมือนกัน เวลาแบบนั้น<br>ลองสูดหายใจเข้าลึก ๆ ให้ใจมีพลัง...<br><br>\"เอาล่ะ มาพยายามกันใหม่อีกครั้งนะ\"", image: "bg10.jpg" },
+            { th: "คนที่เราได้มาใช้เวลาร่วมกัน ณ เวลาใดเวลาหนึ่ง ในสถานที่ใดสถานที่หนึ่ง<br>อาจจะเป็นคนสำคัญที่พระพุทธองค์ทรงนำพาให้มาพบกันก็ได้นะ", image: "bg11.jpg" },
+            { th: "ทุกครั้งที่รู้สึก \"ขอบคุณ\" หรือ \"ซาบซึ้งใจ\"<br>จิตใจก็จะยิ่งเปล่งประกายมากขึ้น", image: "bg12.jpg" },
+            { th: "อย่าเก็บตัวและคิดว่า \"คนอย่างเรามันไม่ได้เรื่อง...\" เลยนะ<br>เพราะพระพุทธองค์ทรงคาดหวังในสิ่งที่คุณเป็นอยู่ และยังมีคนที่ต้องการคุณในแบบที่คุณเป็นด้วย<br>จงก้าวไปข้างหน้าและคิดในแง่บวก<br><br>หากได้แสดงพลังออกมาเต็มที่แล้ว ก็ไม่มีอะไรต้องเสียใจภายหลัง", image: "bg13.jpg" },
+            { th: "เราจำเป็นต้องมีประสบการณ์แบบเดียวกัน<br>ถึงจะเข้าใจความรู้สึกของคนอื่นได้งั้นหรือ?<br>ฉันไม่คิดเช่นนั้นหรอก ขอเพียงมีความจริงใจที่อยากจะเยียวยาความทุกข์หรือความเศร้า<br>หรืออยากจะแบ่งเบามันสักนิด เราก็สามารถเชื่อมถึงกันได้แล้ว", image: "bg14.jpg" },
+            { th: "ความเห็นอกเห็นใจ คือการเอาใจของเราไปใส่ในใจของเขา", image: "bg15.jpg" },
+            { th: "ฉันเองก็มีช่วงเวลาที่หดหู่ใจเหมือนกัน<br>แต่เวลาแบบนั้น ฉันจะบอกตัวเองเพื่อเปลี่ยนอารมณ์ว่า<br>\"ช่วยไม่ได้ มันผ่านไปแล้ว<br>คราวหน้าต้องระวังให้มากกว่านี้นะ!\"", image: "bg16.jpg" },
+            { th: "การคิดถึงเรื่องของตัวเองเป็นสิ่งสำคัญ<br>การคิดถึงเรื่องของคนอื่นเสมือนเป็นเรื่องของตัวเองนั้นสำคัญยิ่งกว่า<br>คนที่อ่อนโยน อบอุ่น คอยเกื้อกูล และอุทิศตนเพื่อผู้อื่น<br>จะได้รับการดูแลอย่างทะนุถนอมจากพระพุทธองค์", image: "bg17.jpg" },
+            { th: "อย่าลืมนะว่าตั้งแต่เกิดมาจนถึงตอนนี้ มีผู้คนมากมายเพียงใดที่คอยช่วยเหลือและมอบความรักให้แก่คุณ<br>ทุก ๆ คนล้วนเป็นชีวิตที่ล้ำค่า สำหรับครอบครัว สำหรับเพื่อนพ้อง และสำหรับฉัน", image: "bg18.jpg" },
+            { th: "มนุษย์เราทุกคน ไม่มีใครที่สมบูรณ์แบบหรอก", image: "bg19.jpg" },
+            { th: "การเห็นคุณค่าและดูแลรักษาข้าวของเครื่องใช้ เพราะทุกสิ่งล้วนมีชีวิตในตัวเอง<br>หากเราทะนุถนอมสิ่งใด สิ่งนั้นก็จะคอยปกป้องเรา<br>ธรรมชาติกับตัวเรา ข้าวของกับผู้คน ทั้งหมดล้วนเป็นหนึ่งเดียวกัน", image: "bg20.jpg" },
+            { th: "เคยกลุ้มใจเรื่องการสื่อสารกับคนอื่นบ้างไหม?<br>เวลาแบบนั้น ลองเปิดใจรับฟังสิ่งที่อีกฝ่ายพูดดูก่อน แล้วค่อยแสดงความคิดเห็นของตัวเองทีหลัง<br>ทำแบบนี้แล้วจะช่วยลดระยะห่างระหว่างกันได้นะ", image: "bg21.jpg" },
+            { th: "การปฏิบัติต่อผู้อื่นด้วยรอยยิ้มที่แจ่มใสและอบอุ่น สิ่งนี้เรียกว่า \"วคันเสะ\" (การให้ทานด้วยรอยยิ้ม)<br>ทุกคนเองถ้าได้รับการต้อนรับด้วยรอยยิ้มก็คงจะดีใจใช่ไหมล่ะ?<br>นี่คือหนึ่งในการปฏิบัติธรรมที่สำคัญในพระพุทธศาสนา", image: "bg22.jpg" },
+            { th: "การทำความดี ในช่วงแรกอาจต้อง \"ตั้งใจ\" ทำ ไม่งั้นอาจจะไม่ต่อเนื่อง<br>แต่เมื่อคอยบอกตัวเองซ้ำ ๆ การทำดีก็จะกลายเป็น \"นิสัย\" ไปเองโดยธรรมชาติ<br>เมื่อถึงตอนนั้น คุณจะได้พบกับตัวคุณในเวอร์ชันที่วิเศษที่สุดเลยล่ะ", image: "bg23.jpg" }
         ];
+
+        // 💡 [Important] Paste your common Google Apps Script (GAS) Web app URL here!
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbyw8pAvrfggC3fIJoLLemGFfadZd_Qr295XA6C-zqzCtnCLELzZAwOnnUcA08itDRV2/exec';
 
         window.onload = function() {
             try {
+                // --- [Daily Duplicate Cut] Auto Count Access Log ---
+                const today = new Date().toISOString().split('T')[0];
+                const lastVisitDate = localStorage.getItem('lastVisitDate_TH');
+                
+                // Notify GAS only if this is the first access today for Thai page
+                if (lastVisitDate !== today) {
+                    fetch(gasUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({ type: "access", lang: "TH" }) // Thai Stamp
+                    });
+                    localStorage.setItem('lastVisitDate_TH', today);
+                }
+                // -----------------------------------------------------------
+
                 const randomIndex = Math.floor(Math.random() * quotesData.length);
                 const selectedSet = quotesData[randomIndex];
                 
-                // 背景画像を設定（th-pageフォルダーから見て1つ上の階層にある画像を指定）
+                // Assumes the image folder (Main) is one level up (../)
                 document.body.style.backgroundImage = `url('../${selectedSet.image}')`;
                 
                 let htmlContent = "";
@@ -163,7 +187,7 @@
                 
                 document.getElementById("content-body").innerHTML = htmlContent;
             } catch (error) {
-                alert("Loading Error");
+                alert("เกิดข้อผิดพลาดในการโหลดข้อมูล");
                 console.error("Error details:", error);
             }
         };
@@ -175,50 +199,58 @@
             actionBtn.style.display = 'none';
         }
 
-        // 送信処理
         const form = document.getElementById('thank-you-form');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const submitBtn = document.getElementById('submit-btn');
-            submitBtn.innerText = "กำลังส่ง...";
-            submitBtn.disabled = true;
+            if (submitBtn) {
+                submitBtn.innerText = "กำลังส่ง...";
+                submitBtn.disabled = true;
+            }
 
             const formData = new FormData(form);
-            formData.append("lang", "Thai");
-            const searchParams = new URLSearchParams(formData);
+            formData.append("lang", "TH"); // Records "TH" in the spreadsheet
 
-            // ★【重要】ここに日本語版と同じ、または新しく作ったGASのURLを貼り付けてください！
-            const gasUrl = 'https://script.google.com/macros/s/AKfycbyG_zASneceAHfO8n3en4w5-JH94hHJfx8mQAZzdxXqRjYZAaVtfvkdz11kbK0MYP9y/exec';
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
 
             fetch(gasUrl, {
                 method: 'POST',
-                body: searchParams
+                body: json
             })
             .then(async (response) => {
                 let res = await response.json();
                 if (res.status === "success") {
-                    alert("ขอบคุณค่ะ/ครับ ส่งข้อความเสร็จสมบูรณ์แล้ว\n(Thank you! Your message has been sent successfully.)");
+                    alert("ส่งข้อความขอบคุณของคุณเรียบร้อยแล้ว");
                     form.reset();
-                    document.getElementById('message-form-container').style.display = 'none';
+                    
+                    const formContainer = document.getElementById('message-form-container');
+                    if (formContainer) formContainer.style.display = 'none';
                     
                     const actionBtn = document.getElementById('action-btn');
-                    actionBtn.innerText = "💌 ส่งข้อความแล้ว";
-                    actionBtn.style.display = 'inline-block';
-                    actionBtn.disabled = true;
-                    actionBtn.style.backgroundColor = "#ccc";
-                    actionBtn.style.boxShadow = "none";
+                    if (actionBtn) {
+                        actionBtn.innerText = "💌 ส่งแล้ว";
+                        actionBtn.style.display = 'inline-block';
+                        actionBtn.disabled = true;
+                        actionBtn.style.backgroundColor = "#ccc";
+                        actionBtn.style.boxShadow = "none";
+                    }
                 } else {
-                    alert("เกิดข้อผิดพลาดในการส่ง: " + (res.message || "Unknown error"));
-                    submitBtn.innerText = "ส่งข้อความ";
-                    submitBtn.disabled = false;
+                    alert("ส่งไม่สำเร็จ: " + (res.message || "เกิดข้อผิดพลาดไม่ทราบสาเหตุ"));
+                    if (submitBtn) {
+                        submitBtn.innerText = "ส่งข้อความ";
+                        submitBtn.disabled = false;
+                    }
                 }
             })
             .catch((error) => {
-                alert("ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้งในภายหลัง");
+                alert("เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้งในภายหลัง");
                 console.error(error);
-                submitBtn.innerText = "ส่งข้อความ";
-                submitBtn.disabled = false;
+                if (submitBtn) {
+                    submitBtn.innerText = "ส่งข้อความ";
+                    submitBtn.disabled = false;
+                }
             });
         });
     </script>

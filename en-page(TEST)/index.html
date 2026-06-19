@@ -110,24 +110,20 @@
             box-sizing: border-box;
         }
         
-        /* 🌈 【修正箇所】虹色の線自体を「半透明（rgba）」にして透かせました */
+        /* 🌈 枠線は半透明のシースルー虹色 */
         .modal-title {
             font-size: 22px; 
             font-weight: bold;
-            margin-bottom: 35px;
+            margin-bottom: 20px;
             text-align: center;
             color: #2c3e50;
             line-height: 1.5;
-            
-            /* ✨ 横幅の調整と、🌸を絶対に改行させない魔法の設定 */
             width: 95%;
             max-width: 365px;
             white-space: nowrap; 
-            padding: 20px 15px;
+            padding: 15px 10px;
             box-sizing: border-box;
             display: inline-block;
-
-            /* 💡 枠の太さを4pxにし、中の白透かしは30%（0.3）のまま、虹色をすべて透明度40%（0.4）の淡い色に調整 */
             border: 4px solid transparent;
             border-radius: 16px;
             background-image: 
@@ -143,6 +139,51 @@
             background-origin: border-box;
             background-clip: padding-box, border-box;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        /* 🌍 国籍入力用ボックスのスタイル（うっすら白透かし） */
+        .country-container {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            width: 95%;
+            max-width: 365px;
+            box-sizing: border-box;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .country-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .radio-option input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .country-text-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            margin-top: 4px;
+            display: none; /* 初期状態は非表示 */
         }
         
         .modal-btn-group {
@@ -171,6 +212,20 @@
 
     <div id="statusModal">
         <div class="modal-title">Welcome!<br>🌸Please Check In🌸</div>
+        
+        <div class="country-container">
+            <span class="country-label">Where are you from?</span>
+            <label class="radio-option">
+                <input type="radio" name="countryOpt" value="Thailand" checked onclick="toggleCountryInput(false)">
+                Thailand
+            </label>
+            <label class="radio-option">
+                <input type="radio" name="countryOpt" value="Other" onclick="toggleCountryInput(true)">
+                Other (Free Input)
+            </label>
+            <input type="text" id="customCountry" class="country-text-input" placeholder="Enter your country">
+        </div>
+
         <div class="modal-btn-group">
             <button class="modal-btn btn-member" onclick="selectStatus('Member')">Member</button>
             <button class="modal-btn btn-nonmember" onclick="selectStatus('Visitor')">Visitor</button>
@@ -214,17 +269,29 @@
             { en: "Remember how many people have helped you and given you love<br>since you were born until now. Everyone's life is precious<br>to their family, their friends, and to me.", image: "bg18.jpg" },
             { en: "No one is perfect.", image: "bg19.jpg" },
             { en: "Cherish things. Everything has life.<br>If you cherish them, you will be protected by the things you cherished.<br>Nature and yourself, tools and people—<br>all are one.", image: "bg20.jpg" },
-            { en: "Do you ever worry about communication with others?<br>At times like that, try listening carefully to what the other person has to say.<br>Express your own thoughts after that.<br>By doing so, you can shorten the distance between you.", image: "bg21.jpg" },
+            { en: "Do we have to go through the same experience<br>to understand someone's feelings?<br>I don't think so.<br>As long as there is sincerity to ease suffering or sadness,<br>and to share it even a little, we can connect.", image: "bg21.jpg" },
             { en: "Welcoming others with a gentle, warm smile is called<br>\"Waganse\" (offering of a smiling face).<br>You would be happy to be welcomed with a smile, wouldn't you?<br>It is one of the important practices in Buddhism.", image: "bg22.jpg" },
             { en: "Doing good deeds may require conscious effort at first<br>to keep it going. As you keep telling yourself over and over,<br>doing good will naturally become a \"habit.\"<br>At that moment, you will find a wonderful version of yourself.", image: "bg23.jpg" }
         ];
 
-        const gasUrl = 'https://script.google.com/macros/s/AKfycbxSs7W8iExTpinl4idbsVH2ltGxIT1m6MA87QLekHhAGVlf5nuwgqmp0ZI0RqFF_gAi/exec';
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbwObHoPWzSUmNQCXlUvEA9qLc8A35X8Z3UOMDuQilp9TgQOf-tS5Bv-2xBgXKgwr_Mz/exec';
 
         let selectedMemberStatus = "Unknown"; 
+        let cachedDeviceID = "";
+
+        // 📱 デバイスを識別するためのユニークIDを生成・取得する関数
+        function getOrCreateDeviceID() {
+            let id = localStorage.getItem('artwork_device_id');
+            if (!id) {
+                id = 'dev_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('artwork_device_id', id);
+            }
+            return id;
+        }
 
         window.onload = function() {
             try {
+                cachedDeviceID = getOrCreateDeviceID();
                 document.getElementById("statusModal").style.display = "flex";
 
                 const randomIndex = Math.floor(Math.random() * quotesData.length);
@@ -239,16 +306,37 @@
             }
         };
 
+        // 🌍 「Other」が選ばれたときだけテキスト入力欄を出す関数
+        function toggleCountryInput(show) {
+            const inputField = document.getElementById("customCountry");
+            inputField.style.display = show ? "block" : "none";
+            if(show) inputField.focus();
+        }
+
         function selectStatus(statusValue) {
             selectedMemberStatus = statusValue; 
-            document.getElementById("statusModal").style.display = "none";
-            const today = new Date().toISOString().split('T')[0];
             
+            // 🌍 国籍データの取得判断
+            let finalCountry = "Thailand";
+            const radioVal = document.querySelector('input[name="countryOpt"]:checked').value;
+            if (radioVal === "Other") {
+                const customVal = document.getElementById("customCountry").value.trim();
+                finalCountry = customVal ? customVal : "Other";
+            }
+
+            document.getElementById("statusModal").style.display = "none";
+            
+            // GASへアクセスデータを送信（識別IDと国名も同封）
             fetch(gasUrl, {
                 method: 'POST',
-                body: JSON.stringify({ type: "access", lang: "EN", status: statusValue })
+                body: JSON.stringify({ 
+                    type: "access", 
+                    lang: "EN", 
+                    status: statusValue, 
+                    deviceId: cachedDeviceID,
+                    country: finalCountry
+                })
             })
-            .then(() => { localStorage.setItem('lastVisitDate_EN', today); })
             .catch((err) => { console.error("Transmission failed: ", err); });
         }
 
@@ -264,8 +352,10 @@
             if (submitBtn) { submitBtn.innerText = "Sending..."; submitBtn.disabled = true; }
 
             const formData = new FormData(form);
+            formData.append("type", "message"); // メッセージ送信であることを明示
             formData.append("lang", "EN"); 
             formData.append("status", selectedMemberStatus); 
+            formData.append("deviceId", cachedDeviceID); // メッセージ側にも一応IDを紐付け
 
             const object = Object.fromEntries(formData);
             const json = JSON.stringify(object);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artwork Message</title>
+    <title>Artwork Message (Test Version)</title>
     <style>
         body {
             display: flex;
@@ -29,6 +29,7 @@
             box-sizing: border-box;
             max-height: 90vh;
             overflow-y: auto;
+            margin-bottom: 90px; /* 下の固定ボタンと被らないように余白を確保 */
         }
         .lang-block {
             margin-bottom: 0;
@@ -57,10 +58,21 @@
         }
         #action-btn:active { transform: scale(0.95); }
 
-        /* 🔄 代理チェックインボタンのスタイル */
+        /* ⟳ 代理チェックインボタンをBOXの外へ出し、画面最下部に1行で固定 */
+        .proxy-container {
+            position: fixed;
+            bottom: 20px;       /* 画面最下部から少し浮かせる */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 320px;   /* 横長1行に綺麗に収まるサイズ */
+            text-align: center;
+            z-index: 99;        /* ポップアップ(9999)の裏に隠れるように設定 */
+        }
+
         #proxy-btn {
-            margin-top: 15px;
-            padding: 10px 20px;
+            width: 100%;        /* 1行いっぱいに広げる */
+            padding: 10px 15px;
             font-size: 14px;
             font-weight: bold;
             background-color: white;
@@ -68,12 +80,23 @@
             border: 2px solid #0076ff;
             border-radius: 25px;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 浮き上がらせる薄い影 */
             transition: all 0.2s ease;
-            width: 80%;
-            max-width: 250px;
+            white-space: nowrap; /* 文字が途中で絶対に改行されないようにする */
             display: inline-block;
+            margin-top: 0;
         }
         #proxy-btn:active { transform: scale(0.95); }
+
+        /* ⟳ 矢印を強制的に鮮やかな青にする設定 */
+        .blue-arrow {
+            color: #0076ff;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
 
         #message-form-container {
             display: none;
@@ -273,7 +296,6 @@
     <div id="quote-container">
         <div id="content-body">Loading...</div>
         
-        <button id="proxy-btn" onclick="showProxyModal()">🔄 Check in for another person</button>
         <br>
         <button id="action-btn" onclick="toggleForm()">💌 Message of Gratitude</button>
         
@@ -289,8 +311,14 @@
         </div>
     </div>
 
+    <div class="proxy-container">
+        <button id="proxy-btn" onclick="showProxyModal()">
+            <span class="blue-arrow">⟳</span>Check in for another person
+        </button>
+    </div>
+
     <script>
-        // 23個の尊い御言葉データ
+        // 23個の尊い御言葉データ（完全復活）
         const quotesData = [
             { en: "Always together. Always by your side.<br>That is Buddha. When you feel down, sad,<br>or lose confidence,<br>close your eyes and remember.<br>You are always with Buddha.", image: "bg1.jpg" },
             { en: "I came to know the \"heart\" of Buddha through your kindness. Thank you.", image: "bg2.jpg" },
@@ -317,7 +345,8 @@
             { en: "Doing good deeds may require conscious effort at first<br>to keep it going. As you keep telling yourself over and over,<br>doing good will naturally become a \"habit.\"<br>At that moment, you will find a wonderful version of yourself.", image: "bg23.jpg" }
         ];
 
-        const gasUrl = 'ここに新しいGASのURLを貼り付けます';
+        // 🔗 GASのウェブアプリURL（★ここにURLを貼り付けてください★）
+        const gasUrl = 'https://script.google.com/macros/s/AKfycbzj4t4GxDv39yMYBtwHDfPRQpj03lMNZE2dWC2fpsahO6cvrv97HZSAv1ASQphd0ba5/exec';
 
         let selectedMemberStatus = "Unknown"; 
         let selectedCountry = "Thailand";
@@ -340,14 +369,8 @@
 
         window.onload = function() {
             try {
-                // 【本番用制御】今日すでに一度チェックインしているか判定
-                const lastCheckIn = localStorage.getItem('lastCheckInDate');
-                const todayStr = getTodayString();
-
-                if (lastCheckIn !== todayStr) {
-                    // 今日まだであればポップアップを自動表示
-                    document.getElementById("statusModal").style.display = "flex";
-                }
+                // 🧪 【テスト用制御】記憶を無視して、開くたびに必ずポップアップを表示
+                document.getElementById("statusModal").style.display = "flex";
 
                 // 名言・背景のランダム初期化は常に実行
                 refreshQuote();
@@ -375,12 +398,10 @@
 
         // 強制的に代理用のポップアップを出す関数
         function showProxyModal() {
-            // 国籍ラジオボタンをタイ(初期値)に戻す
             document.querySelector('input[name="countryOpt"][value="Thailand"]').checked = true;
             toggleCountryInput(false);
             document.getElementById("customCountry").value = "";
             
-            // モーダルを再表示
             document.getElementById("statusModal").style.display = "flex";
         }
 
@@ -395,21 +416,18 @@
             }
             selectedCountry = finalCountry;
 
-            // ポップアップを隠して、御言葉を新しくシャッフル
             document.getElementById("statusModal").style.display = "none";
             refreshQuote();
             
-            // チェックイン完了日を端末に記憶
             localStorage.setItem('lastCheckInDate', getTodayString());
 
-            // 送信データに端末固有の deviceId を追加して送信
             fetch(gasUrl, {
                 method: 'POST',
                 body: JSON.stringify({ 
                     type: "access", 
                     status: statusValue, 
                     country: finalCountry,
-                    deviceId: getOrCreateDeviceId() // ✅ GAS側にデバイスIDを渡す
+                    deviceId: getOrCreateDeviceId()
                 })
             })
             .catch((err) => { console.error("Transmission failed: ", err); });
@@ -430,7 +448,7 @@
             formData.append("type", "message"); 
             formData.append("status", selectedMemberStatus); 
             formData.append("country", selectedCountry);
-            formData.append("deviceId", getOrCreateDeviceId()); // ✅ メッセージ側にもデバイスIDを付与
+            formData.append("deviceId", getOrCreateDeviceId());
 
             const object = Object.fromEntries(formData);
             const json = JSON.stringify(object);

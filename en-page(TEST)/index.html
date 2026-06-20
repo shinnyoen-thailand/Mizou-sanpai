@@ -463,7 +463,25 @@
             document.getElementById("statusModal").style.display = "flex";
         }
 
-        // 🛠️ 【修正箇所】CORSのエラーを回避して確実にGASに届けるテスト用送信ロジック
+        // 🛠️ 【追加】次の人がチェックインした際に、前の人の送信状態（ロック）を完全に解除する関数
+        function resetMessageForm() {
+            const actionBtn = document.getElementById('action-btn');
+            if (actionBtn) {
+                actionBtn.innerText = "💌 Message of Gratitude";
+                actionBtn.style.display = 'inline-block';
+                actionBtn.disabled = false;
+                actionBtn.style.backgroundColor = "#0076ff"; // 青色に戻す
+                actionBtn.style.boxShadow = "0 4px 10px rgba(0,118,255,0.3)";
+            }
+            document.getElementById('message-form-container').style.display = 'none';
+            form.reset();
+            const submitBtn = document.getElementById('submit-btn');
+            if (submitBtn) {
+                submitBtn.innerText = "Submit";
+                submitBtn.disabled = false;
+            }
+        }
+
         function selectStatus(statusValue) {
             selectedMemberStatus = statusValue; 
             
@@ -479,6 +497,9 @@
             refreshQuote();
             
             localStorage.setItem('lastCheckInDate', getTodayString());
+
+            // 🛠️ チェックイン完了のタイミングで、メッセージボタンを毎回新品の状態にリセット
+            resetMessageForm();
 
             // テスト中のCORSブロックを回避するため、mode: 'no-cors' を追加
             fetch(gasUrl, {
@@ -502,7 +523,6 @@
             document.getElementById('action-btn').style.display = 'none';
         }
 
-        // 🛠️ 【修正箇所】お礼メッセージもCORSのブロックを受けないように最適化
         const form = document.getElementById('thank-you-form');
         form.addEventListener('submit', function(e) {
             e.preventDefault();

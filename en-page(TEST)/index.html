@@ -5,20 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artwork Message (Test Version)</title>
     <style>
+        /* 🌍 全体を画面の「縦・横」の完全な中央に配置するためのベース設定 */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            align-items: center; /* これで上下（縦）の中央に配置します */
             font-family: sans-serif;
-            margin: 0;
-            padding: 15px;
             text-align: center;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             transition: background-image 0.5s ease;
+            box-sizing: border-box;
+            padding: 20px;
         }
+
+        /* 📜 お言葉のBOX（画面中央に綺麗に収まるメインコンテナ） */
         #quote-container {
             background: rgba(255, 255, 255, 0.75);
             padding: 35px 20px;
@@ -27,20 +35,22 @@
             max-width: 390px; 
             width: 100%;
             box-sizing: border-box;
-            max-height: 90vh;
+            max-height: 75vh; /* 画面下部の固定ボタンと絶対に被らない高さに調整 */
             overflow-y: auto;
-            margin-bottom: 90px; /* 下の固定ボタンと被らないように余白を確保 */
         }
+
         .lang-block {
             margin-bottom: 0;
             line-height: 1.8;
         }
+
         .lang-english {
             font-size: 16px;
             font-weight: bold;
             color: #333;
             word-break: break-word;
         }
+
         #action-btn {
             margin-top: 25px;
             padding: 12px 24px;
@@ -58,44 +68,103 @@
         }
         #action-btn:active { transform: scale(0.95); }
 
-        /* ⟳ 代理チェックインボタンをBOXの外へ出し、画面最下部に1行で固定 */
+        /* 🔄 代理チェックインボタン（画面最下部に横1行固定） */
         .proxy-container {
             position: fixed;
-            bottom: 20px;       /* 画面最下部から少し浮かせる */
+            bottom: 25px;       /* 画面最下部からの余白 */
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 320px;   /* 横長1行に綺麗に収まるサイズ */
+            max-width: 340px;   /* 循環マークが入るため少しだけ幅を広げて1行を維持 */
             text-align: center;
-            z-index: 99;        /* ポップアップ(9999)の裏に隠れるように設定 */
+            z-index: 99;        /* ポップアップの裏に隠れるレイヤー設定 */
         }
 
         #proxy-btn {
-            width: 100%;        /* 1行いっぱいに広げる */
-            padding: 10px 15px;
-            font-size: 14px;
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
             font-weight: bold;
             background-color: white;
-            color: #0076ff;
-            border: 2px solid #0076ff;
+            color: #27ae60;      /* 共有していただいた画像に合わせた深みのある緑 */
+            border: 2.5px solid #27ae60;
             border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 浮き上がらせる薄い影 */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: all 0.2s ease;
-            white-space: nowrap; /* 文字が途中で絶対に改行されないようにする */
-            display: inline-block;
-            margin-top: 0;
+            white-space: nowrap;
+            display: flex;       /* マークと文字を横並びにする */
+            align-items: center;
+            justify-content: center;
+            gap: 10px;           /* マークと文字の間の隙間 */
         }
         #proxy-btn:active { transform: scale(0.95); }
 
-        /* ⟳ 矢印を強制的に鮮やかな青にする設定 */
-        .blue-arrow {
-            color: #0076ff;
+        /* 🎨 CSSで描く高精細な2方向循環矢印（画像bca78cの再現） */
+        .custom-refresh-icon {
+            width: 22px;
+            height: 22px;
+            position: relative;
             display: inline-block;
-            font-size: 16px;
-            font-weight: bold;
-            margin-right: 6px;
-            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        /* 上の矢印（深みのある緑） */
+        .custom-refresh-icon::before {
+            content: "";
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 14px;
+            height: 14px;
+            border: 3px solid #4ca679;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            border-radius: 50%;
+            transform: rotate(-35deg);
+        }
+        .custom-refresh-icon::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            right: -1px;
+            border: 4px solid transparent;
+            border-top-color: #4ca679;
+            border-left-color: #4ca679;
+            transform: rotate(10deg);
+        }
+
+        /* 下の矢印（明るいエメラルド緑） */
+        .sub-arrow-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(180deg); /* 180度ひっくり返して対にする */
+        }
+        .sub-arrow-layer::before {
+            content: "";
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 14px;
+            height: 14px;
+            border: 3px solid #63e2b2;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            border-radius: 50%;
+            transform: rotate(-35deg);
+        }
+        .sub-arrow-layer::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            right: -1px;
+            border: 4px solid transparent;
+            border-top-color: #63e2b2;
+            border-left-color: #63e2b2;
+            transform: rotate(10deg);
         }
 
         #message-form-container {
@@ -132,7 +201,7 @@
         }
         #submit-btn:active { transform: scale(0.95); background-color: #059669; }
 
-        /* 🌸 ポップアップ全体の背景を「外観.jpg」に設定 */
+        /* 🌸 ポップアップ設定 */
         #statusModal {
             position: fixed;
             top: 0;
@@ -152,7 +221,6 @@
             box-sizing: border-box;
         }
         
-        /* 🌈 枠線は半透明のシースルー虹色 */
         .modal-title {
             font-size: 22px; 
             font-weight: bold;
@@ -183,7 +251,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
-        /* 🌍 国籍入力用ボックスのスタイル（うっすら白透かし） */
         .country-container {
             background: rgba(255, 255, 255, 0.5);
             border-radius: 12px;
@@ -259,11 +326,7 @@
         }
         .modal-btn:active { transform: scale(0.97); }
         .btn-member { background-color: #2ecc71; color: white; }
-        
-        .btn-nonmember { 
-            background-color: #add8e6; 
-            color: #1e293b; 
-        } 
+        .btn-nonmember { background-color: #add8e6; color: #1e293b; } 
     </style>
 </head>
 <body>
@@ -313,12 +376,15 @@
 
     <div class="proxy-container">
         <button id="proxy-btn" onclick="showProxyModal()">
-            <span class="blue-arrow">⟳</span>Check in for another person
+            <span class="custom-refresh-icon">
+                <span class="sub-arrow-layer"></span>
+            </span>
+            Check in for another person
         </button>
     </div>
 
     <script>
-        // 23個の尊い御言葉データ（完全復活）
+        // 23個の尊い御言葉データ
         const quotesData = [
             { en: "Always together. Always by your side.<br>That is Buddha. When you feel down, sad,<br>or lose confidence,<br>close your eyes and remember.<br>You are always with Buddha.", image: "bg1.jpg" },
             { en: "I came to know the \"heart\" of Buddha through your kindness. Thank you.", image: "bg2.jpg" },
@@ -351,7 +417,6 @@
         let selectedMemberStatus = "Unknown"; 
         let selectedCountry = "Thailand";
 
-        // 🆔 端末固有IDを生成または取得する関数
         function getOrCreateDeviceId() {
             let id = localStorage.getItem('deviceId');
             if (!id) {
@@ -361,7 +426,6 @@
             return id;
         }
 
-        // 📅 今日を表す日付文字列を取得(ローカル時間)
         function getTodayString() {
             const now = new Date();
             return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -369,17 +433,14 @@
 
         window.onload = function() {
             try {
-                // 🧪 【テスト用制御】記憶を無視して、開くたびに必ずポップアップを表示
+                // 🧪 テスト用：リロードしたら強制的に出す
                 document.getElementById("statusModal").style.display = "flex";
-
-                // 名言・背景のランダム初期化は常に実行
                 refreshQuote();
             } catch (error) {
                 alert("An error occurred while loading.");
             }
         };
 
-        // 御言葉と背景をランダムに再設定する関数
         function refreshQuote() {
             const randomIndex = Math.floor(Math.random() * quotesData.length);
             const selectedSet = quotesData[randomIndex];
@@ -396,12 +457,10 @@
             if(show) inputField.focus();
         }
 
-        // 強制的に代理用のポップアップを出す関数
         function showProxyModal() {
             document.querySelector('input[name="countryOpt"][value="Thailand"]').checked = true;
             toggleCountryInput(false);
             document.getElementById("customCountry").value = "";
-            
             document.getElementById("statusModal").style.display = "flex";
         }
 

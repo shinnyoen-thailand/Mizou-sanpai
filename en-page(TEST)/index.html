@@ -15,7 +15,7 @@
         body {
             display: flex;
             justify-content: center;
-            align-items: center; /* これで上下（縦）の中央に配置します */
+            align-items: center; 
             font-family: sans-serif;
             text-align: center;
             background-size: cover;
@@ -35,7 +35,7 @@
             max-width: 390px; 
             width: 100%;
             box-sizing: border-box;
-            max-height: 75vh; /* 画面下部の固定ボタンと絶対に被らない高さに調整 */
+            max-height: 75vh; 
             overflow-y: auto;
         }
 
@@ -71,13 +71,13 @@
         /* 🔄 代理チェックインボタン（画面最下部に横1行固定） */
         .proxy-container {
             position: fixed;
-            bottom: 25px;       /* 画面最下部からの余白 */
+            bottom: 25px;       
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 340px;   /* 循環マークが入るため少しだけ幅を広げて1行を維持 */
+            max-width: 340px;   
             text-align: center;
-            z-index: 99;        /* ポップアップの裏に隠れるレイヤー設定 */
+            z-index: 99;        
         }
 
         #proxy-btn {
@@ -86,21 +86,21 @@
             font-size: 15px;
             font-weight: bold;
             background-color: white;
-            color: #27ae60;      /* 共有していただいた画像に合わせた深みのある緑 */
+            color: #27ae60;      
             border: 2.5px solid #27ae60;
             border-radius: 25px;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: all 0.2s ease;
             white-space: nowrap;
-            display: flex;       /* マークと文字を横並びにする */
+            display: flex;       
             align-items: center;
             justify-content: center;
-            gap: 10px;           /* マークと文字の間の隙間 */
+            gap: 10px;           
         }
         #proxy-btn:active { transform: scale(0.95); }
 
-        /* 🎨 CSSで描く高精細な2方向循環矢印（画像bca78cの再現） */
+        /* 🎨 CSSで描く高精細な2方向循環矢印 */
         .custom-refresh-icon {
             width: 22px;
             height: 22px;
@@ -109,7 +109,6 @@
             flex-shrink: 0;
         }
 
-        /* 上の矢印（深みのある緑） */
         .custom-refresh-icon::before {
             content: "";
             position: absolute;
@@ -134,14 +133,13 @@
             transform: rotate(10deg);
         }
 
-        /* 下の矢印（明るいエメラルド緑） */
         .sub-arrow-layer {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            transform: rotate(180deg); /* 180度ひっくり返して対にする */
+            transform: rotate(180deg); 
         }
         .sub-arrow-layer::before {
             content: "";
@@ -410,7 +408,7 @@
             { en: "Doing good deeds may require conscious effort at first<br>to keep it going. As you keep telling yourself over and over,<br>doing good will naturally become a \"habit.\"<br>At that moment, you will find a wonderful version of yourself.", image: "bg23.jpg" }
         ];
 
-        // 🔗 GASのウェブアプリURL（★ここに新しいURLを貼り付けてください★）
+        // 🔗 GASのウェブアプリURL（★ご自身のURLに差し替えてください★）
         const gasUrl = 'https://script.google.com/macros/s/AKfycbwjHcNNSH7_EbYSKnuh2yDF3QjJSiAYC4Kt3Zjuo-HcFsarT4sPURHeEtkGa6vqy4dT/exec';
 
         let selectedMemberStatus = "Unknown"; 
@@ -432,7 +430,6 @@
 
         window.onload = function() {
             try {
-                // 🧪 テスト用：リロードしたら強制的に出す
                 document.getElementById("statusModal").style.display = "flex";
                 refreshQuote();
             } catch (error) {
@@ -463,14 +460,13 @@
             document.getElementById("statusModal").style.display = "flex";
         }
 
-        // 🛠️ 【追加】次の人がチェックインした際に、前の人の送信状態（ロック）を完全に解除する関数
         function resetMessageForm() {
             const actionBtn = document.getElementById('action-btn');
             if (actionBtn) {
                 actionBtn.innerText = "💌 Message of Gratitude";
                 actionBtn.style.display = 'inline-block';
                 actionBtn.disabled = false;
-                actionBtn.style.backgroundColor = "#0076ff"; // 青色に戻す
+                actionBtn.style.backgroundColor = "#0076ff"; 
                 actionBtn.style.boxShadow = "0 4px 10px rgba(0,118,255,0.3)";
             }
             document.getElementById('message-form-container').style.display = 'none';
@@ -497,11 +493,8 @@
             refreshQuote();
             
             localStorage.setItem('lastCheckInDate', getTodayString());
-
-            // 🛠️ チェックイン完了のタイミングで、メッセージボタンを毎回新品の状態にリセット
             resetMessageForm();
 
-            // テスト中のCORSブロックを回避するため、mode: 'no-cors' を追加
             fetch(gasUrl, {
                 method: 'POST',
                 mode: 'no-cors', 
@@ -538,7 +531,6 @@
             const object = Object.fromEntries(formData);
             const json = JSON.stringify(object);
 
-            // mode: 'no-cors' でGASの受取口へ直接放り込む設定に
             fetch(gasUrl, { 
                 method: 'POST', 
                 mode: 'no-cors',
@@ -548,7 +540,6 @@
                 body: json 
             })
             .then(() => {
-                // no-corsモード時はレスポンスの解釈をスキップし、送信成功として処理を進める
                 alert("Your message of gratitude has been sent successfully.");
                 form.reset();
                 document.getElementById('message-form-container').style.display = 'none';

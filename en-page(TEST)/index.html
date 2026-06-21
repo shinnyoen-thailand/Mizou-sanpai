@@ -330,7 +330,7 @@
 <body>
 
     <div id="statusModal">
-        <div class="modal-title">おかえりなさいませ<br>🪷ーみ像参拝ー🪷<br>チェックインをお願いします</div>
+        <div class="modal-title">ようこそ<br>🪷ーみ像参拝ー🪷<br>チェックインをお願いします</div>
         
         <div class="country-container">
             <span class="country-label">お住まいの国</span>
@@ -349,8 +349,8 @@
         </div>
 
         <div class="modal-btn-group">
-            <button class="modal-btn btn-member" onclick="selectStatus('Member')">Member</button>
-            <button class="modal-btn btn-nonmember" onclick="selectStatus('Visitor')">Visitor</button>
+            <button class="modal-btn btn-member" onclick="selectStatus('Member')">教徒 (Member)</button>
+            <button class="modal-btn btn-nonmember" onclick="selectStatus('Visitor')">一般 (Visitor)</button>
         </div>
     </div>
 
@@ -542,7 +542,7 @@
                 body: json 
             })
             .then(() => {
-                alert("ありがとうございました。");
+                alert("感謝の言葉が事務局へ送信されました。ありがとうございました。");
                 form.reset();
                 document.getElementById('message-form-container').style.display = 'none';
                 const actionBtn = document.getElementById('action-btn');

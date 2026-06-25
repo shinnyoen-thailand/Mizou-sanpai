@@ -110,7 +110,7 @@
         <div id="content-body">お言葉を読み込み中...</div>
         
         <br>
-        <button id="action-btn" onclick="toggleForm()">💌 感謝の言葉を届ける</button>
+        <button id="action-btn" onclick="toggleForm()">💌 感謝の言葉</button>
         
         <div id="message-form-container">
             <form id="thank-you-form" method="POST">
@@ -237,7 +237,7 @@
                 body: json 
             })
             .then(() => {
-                alert("感謝の言葉が事務局へ送信されました。ありがとうございました。");
+                alert("送信されました。ありがとうございました。");
                 form.reset();
                 document.getElementById('message-form-container').style.display = 'none';
                 const actionBtn = document.getElementById('action-btn');

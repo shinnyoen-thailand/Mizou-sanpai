@@ -88,7 +88,7 @@
             font-family: inherit;
         }
         textarea { resize: vertical; margin-bottom: 15px; }
-        
+         
         #submit-btn {
             padding: 10px 30px;
             font-size: 16px;
@@ -108,10 +108,10 @@
 
     <div id="quote-container">
         <div id="content-body">Loading...</div>
-        
+         
         <br>
         <button id="action-btn" onclick="toggleForm()">💌 Message of Gratitude</button>
-        
+         
         <div id="message-form-container">
             <form id="thank-you-form" method="POST">
                 <input type="text" name="bukai" placeholder="Division (Optional)">
@@ -125,34 +125,34 @@
     </div>
 
     <script>
-        // 🌸 聖句データ
+        // 🌸 聖句データ（35〜40文字目安で美しく改行）
         const quotesData = [
-            { en: "Always together. Always by your side.<br>That is Buddha.<br>When you feel down, sad,<br>or lose confidence,<br>close your eyes and remember.<br>You are always with Buddha.", image: "bg1.jpg" },
-            { en: "I came to know the \"heart\" of Buddha through your kindness.<br>Thank you.", image: "bg2.jpg" },
-            { en: "Communication is very important, whether through words or gestures.<br>\"Good morning,\" \"Hello\"<br><br>Let's start with a greeting.", image: "bg3.jpg" },
-            { en: "It's wonderful that you felt<br>motivated to do your best.<br>However, if you push yourself <br>too hard suddenly,you might get tired.<br>Don't overdo it, take it step by step.<br>Why not start with what you can do?", image: "bg4.jpg" },
-            { en: "Buddha resides within everyone's heart.<br>To be kind, to help, to be honest—<br>you have a little bit of that heart, <br>don't you?<br>That \"little bit\" is a small Buddha.", image: "bg5.jpg" },
-            { en: "A person who can reflect on themselves<br>has a beautiful heart.", image: "bg6.jpg" },
-            { en: "Making your appearance neat and beautiful is very good.<br>In addition,if you add heartfelt words and attitude,<br>you can become even more beautiful.", image: "bg7.jpg" },
-            { en: "Cheerful, truthful, kind, warm—<br>\"That person is so nice,\"<br>someone might say.<br>You surely have such good qualities too,<br>each of us has something<br>special to offer.", image: "bg8.jpg" },
-            { en: "Being able to desire to make an effort and improve yourself—<br>that itself is \"happiness.\"", image: "bg9.jpg" },
-            { en: "Sometimes you just want to take a deep breath and say<br>\"Phew,\" don't you?<br>I do too. At times like that,<br>take a deep breath, fill your body with oxygen...<br><br>\"Now, let's do our best again.\"", image: "bg10.jpg" },
-            { en: "A person you spend time with at<br> a certain time and place might be<br> an important person Buddha<br> brought into your life.", image: "bg11.jpg" },
-            { en: "Every time you feel grateful,<br>your heart shines brighter.", image: "bg12.jpg" },
-            { en: "Don't step back thinking,<br>\"I'm no good...\"<br>Buddha expects much from you<br>just as you are.<br>There is someone who needs you<br>just as you are.<br>Be forward-looking and think positively.<br>If you do your best,<br>there is no need for regret.", image: "bg13.jpg" },
-            { en: "Do we have to go through<br>the same experience<br>to understand someone's feelings?<br>I don't think so.<br>As long as there is sincerity to ease suffering or sadness,<br>and to share it even a little, we can connect.", image: "bg14.jpg" },
-            { en: "Compassion means<br>putting yourself in<br>another person's heart.", image: "bg15.jpg" },
-            { en: "I get depressed too.<br>But at times like that, I tell myself<br>to switch my mindset:<br>\"It can't be helped, it's already over.<br>Next time I'll be careful!\"", image: "bg16.jpg" },
-            { en: "Thinking about yourself is important.<br>Thinking about others <br>as your own matter<br>is even more important.<br>A person who is kind, warm, supportive,<br>and dedicated to others is <br>cherished by Buddha.", image: "bg17.jpg" },
-            { en: "Remember how many people have helped you and given you love<br>since you were born until now. Everyone's life is precious<br>to their family, their friends, and to me.", image: "bg18.jpg" },
+            { en: "The buddhas are always with us,<br>right by our side.<br>Close your eyes and remember this<br>whenever you are feeling low<br>or facing difficulties in your life.", image: "bg1.jpg" },
+            { en: "I come to understand<br>the Buddha's heart<br>through your warmth.<br>Thank you.", image: "bg2.jpg" },
+            { en: "Communication is very important.<br>“Good morning.” “Hello!”<br>Let’s begin with greetings.", image: "bg3.jpg" },
+            { en: "Striving to do your best<br>is a wonderful thing,<br>but you may wear yourself out<br>if you try too hard at the beginning.<br>Set achievable goals<br>and move forward little by little.", image: "bg4.jpg" },
+            { en: "Buddha lies in everyone's heart.<br>We all want to be kind,<br>helpful, and truthful in some way.<br>Whenever we feel like this,<br>we discover a buddha<br>in our own hearts.", image: "bg5.jpg" },
+            { en: "Those who can reflect<br>on themselves<br>have pure hearts.", image: "bg6.jpg" },
+            { en: "It's nice to look good,<br>but that alone does not define beauty.<br>With sincere words and conduct,<br>anyone can be truly beautiful.", image: "bg7.jpg" },
+            { en: "Cheerful, truthful, kind, warm —<br>each of us has something<br>special to offer.", image: "bg8.jpg" },
+            { en: "Having the strength to try your best<br>or the wish to do better<br>in itself brings happiness.", image: "bg9.jpg" },
+            { en: "Sometimes we all get tensed up.<br>When I feel that way,<br>I take a deep breath and then<br>I'm ready to try my best again.", image: "bg10.jpg" },
+            { en: "The buddhas guide you to encounter<br>people at certain times and places<br>for a reason.", image: "bg11.jpg" },
+            { en: "Your heart shines each time<br>you feel gratitude.", image: "bg12.jpg" },
+            { en: "Never think, \"I have nothing to offer!\"<br>The buddhas and many others<br>count on you.<br>Look forward and think positively.<br>Just do your best,<br>and you'll have no regrets.", image: "bg13.jpg" },
+            { en: "Can we only sympathize with those<br>whose experiences match our own?<br>I think we can connect with others<br>as long as we sincerely try<br>to understand them and soothe their pain.", image: "bg14.jpg" },
+            { en: "Being considerate means<br>empathizing with others.", image: "bg15.jpg" },
+            { en: "When something happens to bring me down,<br>I tell myself to snap out of it,<br>saying “There’s no use crying<br>over spilled milk!<br>I’ll be more careful and do better<br>next time.”", image: "bg16.jpg" },
+            { en: "It’s important to consider<br>your own needs,<br>but more important to think of others.<br>The buddhas will look after you<br>when you try to be kind, warm,<br>supportive, and devoted to others.", image: "bg17.jpg" },
+            { en: "Never forget that many people<br>have helped and loved you<br>since the day you were born.<br>Your life is important to your family,<br>your friends, and me.", image: "bg18.jpg" },
             { en: "No one is perfect.", image: "bg19.jpg" },
-            { en: "Cherish things. Everything has life.<br>If you cherish them, you will be protected by the things you cherished.<br>Nature and yourself, tools and people—<br>all are one.", image: "bg20.jpg" },
-            { en: "Do we have to go through the same<br>experience to understand<br>someone's feelings?<br>I don't think so.<br>As long as there is sincerity to ease suffering or sadness,<br>and to share it even a little,<br> we can connect.", image: "bg21.jpg" },
-            { en: "Welcoming others with a gentle,<br> warm smile is called<br>\"Waganse\" (offering of a smiling face).<br>You would be happy to be welcomed with a smile, wouldn't you?<br>It is one of the important practices<br>in Buddhism.", image: "bg22.jpg" },
-            { en: "Doing good deeds may require conscious effort at first<br>to keep it going. As you keep telling yourself over and over,<br>doing good will naturally become a \"habit.\"<br>At that moment, you will find a wonderful version of yourself.", image: "bg23.jpg" }
+            { en: "Treat all things as if they are<br>alive and worthy of care.<br>The more you cherish everything<br>around you,<br>the more blessed your life will be.<br>Nature and the self,<br>objects and people — all are one.", image: "bg20.jpg" },
+            { en: "We all find it difficult to<br>communicate at times.<br>Whenever this happens to you,<br>listen carefully to the other person<br>before giving your opinion.<br>It will help to bring you<br>closer together.", image: "bg21.jpg" },
+            { en: "Everyone loves to be greeted<br>with a smile.<br>Giving someone a warm smile is also<br>an important aspect of Buddhist training.<br>It is a form of dana paramita.", image: "bg22.jpg" },
+            { en: "When you try to do something good,<br>you may need to make a conscious effort<br>to follow through at first.<br>Eventually, however, it will become<br>a natural part of your behavior.<br>Then you can discover the beautiful<br>person within you.", image: "bg23.jpg" }
         ];
 
-        // 🔗 GAS Web App URL (★作成したGASのWebアプリURLに差し替えてください★)
+        // 🔗 GAS Web App URL
         const gasUrl = 'https://script.google.com/macros/s/AKfycbz27VJEIDm_tBf4iYYj5HYLsz7suTl1EXopg-vAhFeWoi1-aSanvAtIF3AZMTSmDv93/exec';
 
         function getOrCreateDeviceId() {
@@ -184,11 +184,11 @@
             document.getElementById("content-body").innerHTML = htmlContent;
         }
 
-        // 📡 自動アクセスログ送信 (no-corsを取り除き、テキスト型でPOST)
+        // 📡 自動アクセスログ送信
         function sendAutoAccessLog() {
             const payload = { 
                 type: "access", 
-                lang: "en",       // 👈 英語のQRコードページであることを明示
+                lang: "en",       
                 status: "Auto",   
                 country: "Auto",  
                 deviceId: getOrCreateDeviceId()
@@ -214,14 +214,14 @@
             const submitBtn = document.getElementById('submit-btn');
             if (submitBtn) { 
                 submitBtn.innerText = "Sending..."; 
-                submitBtn.disabled = true; // 送信ボタンを即時無効化（連打防止）
+                submitBtn.disabled = true; 
             }
 
             const formData = new FormData(form);
             const payload = Object.fromEntries(formData);
             
             payload.type = "message";
-            payload.lang = "en"; // 👈 英語のQRコードページであることを明示
+            payload.lang = "en"; 
             payload.status = "Auto";
             payload.country = "Auto";
             payload.deviceId = getOrCreateDeviceId();
@@ -232,7 +232,7 @@
                 body: JSON.stringify(payload)
             })
             .then(res => {
-                alert("Your message has been sent.<br>Thank you.");
+                alert("Your message has been sent.\nThank you.");
                 form.reset();
                 document.getElementById('message-form-container').style.display = 'none';
                 const actionBtn = document.getElementById('action-btn');

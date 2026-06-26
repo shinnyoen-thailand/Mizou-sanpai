@@ -200,6 +200,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     type: "access", 
+                    lang: "en",       // 👈 Tells GAS this access comes from the English QR
                     status: "Auto",   
                     country: "Auto",  
                     deviceId: getOrCreateDeviceId()
@@ -223,6 +224,7 @@
 
             const formData = new FormData(form);
             formData.append("type", "message"); 
+            formData.append("lang", "en");    // 👈 Tells GAS this message is from the English page
             formData.append("status", "Auto"); 
             formData.append("country", "Auto");
             formData.append("deviceId", getOrCreateDeviceId());

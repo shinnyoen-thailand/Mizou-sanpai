@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artwork Message</title>
     <style>
-        /* 🌍 จัดให้อยู่กึ่งกลางหน้าจออย่างสมบูรณ์ */
+        /* 🌍 画面の中央に綺麗に配置 */
         html, body {
             height: 100%;
             margin: 0;
@@ -26,16 +26,35 @@
             padding: 20px;
         }
 
-        /* 📜 กล่องข้อความหลัก */
+        /* 📦 タイトルとお言葉コンテナをまとめる外枠 */
+        #wrapper {
+            max-width: 390px; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* 上下の箱のすき間 */
+        }
+
+        /* 🏷️ 独立したタイトル専用コンテナ（透明度 0.5） */
+        #title-container {
+            background: rgba(255, 255, 255, 0.5); /* 👈 透明度 0.5 */
+            padding: 12px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            font-size: 15px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        /* 📜 メインコンテナ */
         #quote-container {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.5); /* 👈 透明度 0.5 */
             padding: 35px 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            max-width: 390px; 
             width: 100%;
             box-sizing: border-box;
-            max-height: 85vh; 
+            max-height: 75vh; /* タイトルの分、高さを少し調整 */
             overflow-y: auto;
         }
 
@@ -88,7 +107,7 @@
             font-family: inherit;
         }
         textarea { resize: vertical; margin-bottom: 15px; }
-        
+         
         #submit-btn {
             padding: 10px 30px;
             font-size: 16px;
@@ -106,26 +125,35 @@
 </head>
 <body>
 
-    <div id="quote-container">
-        <div id="content-body">กำลังโหลด...</div>
+    <!-- 📦 全体を綺麗に整列させるための外枠 -->
+    <div id="wrapper">
         
-        <br>
-        <button id="action-btn" onclick="toggleForm()">💌 ข้อความแสดงความขอบคุณ</button>
-        
-        <div id="message-form-container">
-            <form id="thank-you-form" method="POST">
-                <input type="text" name="bukai" placeholder="ฝ่าย / แผนก (ไม่บังคับ)">
-                <input type="text" name="kei" placeholder="สาย(ไม่บังคับ)">
-                <input type="text" name="name" placeholder="ชื่อ (ไม่บังคับ)">
-                <textarea name="message" rows="4" placeholder="กรุณากรอกข้อความแสดงความขอบคุณของคุณ..." required></textarea>
-                <br>
-                <button type="submit" id="submit-btn">ส่งข้อความ</button>
-            </form>
+        <!-- 🏷️ お言葉の箱の上に、独立したタイトル箱を配置 -->
+        <div id="title-container">ข้อความจากชินโซ อิโตะ</div>
+
+        <!-- 📜 メインのお言葉コンテナ -->
+        <div id="quote-container">
+            <div id="content-body">กำลังโหลด...</div>
+             
+            <br>
+            <button id="action-btn" onclick="toggleForm()">💌 ข้อความแสดงความขอบคุณ</button>
+             
+            <div id="message-form-container">
+                <form id="thank-you-form" method="POST">
+                    <input type="text" name="bukai" placeholder="ฝ่าย / แผนก (ไม่บังคับ)">
+                    <input type="text" name="kei" placeholder="สาย(ไม่บังคับ)">
+                    <input type="text" name="name" placeholder="ชื่อ (ไม่บังคับ)">
+                    <textarea name="message" rows="4" placeholder="กรุณากรอกข้อความแสดงความขอบคุณของคุณ..." required></textarea>
+                    <br>
+                    <button type="submit" id="submit-btn">Submit</button>
+                </form>
+            </div>
         </div>
+
     </div>
 
     <script>
-        // 🌸 ข้อมูลคำสอนอันศักดิ์สิทธิ์ (23 ข้อความ)
+        // 🌸 聖句データ（タイ語版 23メッセージ）
         const quotesData = [
             { th: "ปวงพระพุทธเจ้าสถิตอยู่เคียงข้างเราเสมอ<br>หลับตาและระลึกถึงสิ่งนี้ไว้ เมื่อใดก็ตามที่รู้สึกท้อแท้<br>หรือกำลังเผชิญกับความยากลำบากในชีวิต", image: "bg1.jpg" },
             { th: "ฉันได้รับรู้ถึงจิตใจของพระพุทธองค์<br>ผ่านความอ่อนโยนและความเมตตาของคุณ ขอบคุณมาก", image: "bg2.jpg" },
@@ -152,7 +180,7 @@
             { th: "การทำความดีอาจต้องใช้ความตั้งใจและพยายามในช่วงแรก<br>เพื่อให้ทำได้อย่างต่อเนื่อง เมื่อคุณคอยบอกตัวเองซ้ำแล้วซ้ำเล่า<br>การทำความดีนั้นจะกลายเป็น \"นิสัย\" ไปเองโดยธรรมชาติ<br>และในวินาทีนั้น คุณจะได้พบกับตัวคุณเองในเวอร์ชันที่งดงามที่สุด", image: "bg23.jpg" }
         ];
 
-        // 🔗 GAS Web App URL (★สร้างเวอร์ชันใหม่ใน GAS แล้วนำ URL มาแปะที่นี่★)
+        // 🔗 GAS Web App URL
         const gasUrl = 'https://script.google.com/macros/s/AKfycbz27VJEIDm_tBf4iYYj5HYLsz7suTl1EXopg-vAhFeWoi1-aSanvAtIF3AZMTSmDv93/exec';
 
         function getOrCreateDeviceId() {
@@ -167,7 +195,7 @@
         window.onload = function() {
             try {
                 refreshQuote();
-                sendAutoAccessLog(); // บันทึกสถิติการเข้าชมอัตโนมัติ
+                sendAutoAccessLog(); // 自動アクセスログの送信
             } catch (error) {
                 console.error("Initialization error:", error);
             }
@@ -184,11 +212,11 @@
             document.getElementById("content-body").innerHTML = htmlContent;
         }
 
-        // 📡 ส่งบันทึกการเข้าชมไปยัง GAS (ลบ no-cors ออก ส่งเป็น text/plain เพื่อป้องกันการเบิ้ล)
+        // 📡 自動アクセスログ送信 (GAS側のタイ語集計用)
         function sendAutoAccessLog() {
             const payload = { 
                 type: "access", 
-                lang: "thai",     // 👈 ระบุเพื่อให้ GAS บวกแต้มที่ช่องภาษาไทย (คอลัมน์ B)
+                lang: "thai",     /* 👈 GAS側でタイ語(B列)に加算させるための識別子 */
                 status: "Auto",   
                 country: "Auto",  
                 deviceId: getOrCreateDeviceId()
@@ -207,21 +235,21 @@
             document.getElementById('action-btn').style.display = 'none';
         }
 
-        // 📤 ส่งแบบฟอร์มข้อความขอบคุณ
+        // 📤 感謝のメッセージフォーム送信処理
         const form = document.getElementById('thank-you-form');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
             if (submitBtn) { 
-                submitBtn.innerText = "กำลังส่ง..."; 
-                submitBtn.disabled = true; // ล็อกปุ่มทันทีเพื่อป้องกันการกดเบิ้ล
+                submitBtn.innerText = "Sending..."; 
+                submitBtn.disabled = true; 
             }
 
             const formData = new FormData(form);
             const payload = Object.fromEntries(formData);
             
             payload.type = "message";
-            payload.lang = "thai"; // 👈 ระบุภาษาไทยสำหรับข้อความขอบคุณ
+            payload.lang = "thai"; /* 👈 タイ語版メッセージとして送信 */
             payload.status = "Auto";
             payload.country = "Auto";
             payload.deviceId = getOrCreateDeviceId();
@@ -232,12 +260,13 @@
                 body: JSON.stringify(payload)
             })
             .then(res => {
-                alert("ส่งข้อความแสดงความขอบคุณของคุณเรียบร้อยแล้ว ขอบคุณมากค่ะ");
+                // 💡 ポップアップの通知テキストを英語（要件）にキープ
+                alert("Your message has been sent.\nThank you.");
                 form.reset();
                 document.getElementById('message-form-container').style.display = 'none';
                 const actionBtn = document.getElementById('action-btn');
                 if (actionBtn) {
-                    actionBtn.innerText = "💌 ส่งแล้ว";
+                    actionBtn.innerText = "💌 Sent";
                     actionBtn.style.display = 'inline-block';
                     actionBtn.disabled = true;
                     actionBtn.style.backgroundColor = "#ccc";
@@ -245,8 +274,8 @@
                 }
             })
             .catch((error) => {
-                alert("เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง");
-                if (submitBtn) { submitBtn.innerText = "ส่งข้อความ"; submitBtn.disabled = false; }
+                alert("A connection error occurred. Please try again.");
+                if (submitBtn) { submitBtn.innerText = "Submit"; submitBtn.disabled = false; }
             });
         });
     </script>

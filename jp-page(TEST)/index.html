@@ -26,16 +26,37 @@
             padding: 20px;
         }
 
+        /* 📦 タイトルとお言葉コンテナをまとめる外枠 */
+        #wrapper {
+            max-width: 390px; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* 上下の箱のすき間 */
+        }
+
+        /* 🏷️ 新設：独立したタイトル専用コンテナ */
+        #title-container {
+            background: rgba(255, 255, 255, 0.5); /* 👈 透明度 0.5 */
+            padding: 12px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #444;
+        }
+
         /* 📜 メインコンテナ */
         #quote-container {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.5); /* 👈 透明度 0.5 */
             padding: 35px 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            max-width: 390px; 
             width: 100%;
             box-sizing: border-box;
-            max-height: 85vh; 
+            max-height: 75vh; /* タイトルの分、高さを少し調整 */
             overflow-y: auto;
         }
 
@@ -106,22 +127,28 @@
 </head>
 <body>
 
-    <div id="quote-container">
-        <div id="content-body">読み込み中...</div>
+    <div id="wrapper">
         
-        <br>
-        <button id="action-btn" onclick="toggleForm()">💌 感謝のメッセージを送る</button>
-        
-        <div id="message-form-container">
-            <form id="thank-you-form" method="POST">
-                <input type="text" name="bukai" placeholder="部会 (任意)">
-                <input type="text" name="kei" placeholder="経 (任意)">
-                <input type="text" name="name" placeholder="お名前 (任意)">
-                <textarea name="message" rows="4" placeholder="感謝のメッセージをご記入ください..." required></textarea>
-                <br>
-                <button type="submit" id="submit-btn">送信する</button>
-            </form>
+        <div id="title-container">Message from Shinso Ito</div>
+
+        <div id="quote-container">
+            <div id="content-body">読み込み中...</div>
+            
+            <br>
+            <button id="action-btn" onclick="toggleForm()">💌 感謝のメッセージを送る</button>
+            
+            <div id="message-form-container">
+                <form id="thank-you-form" method="POST">
+                    <input type="text" name="bukai" placeholder="部会 (任意)">
+                    <input type="text" name="kei" placeholder="経 (任意)">
+                    <input type="text" name="name" placeholder="お名前 (任意)">
+                    <textarea name="message" rows="4" placeholder="感謝のメッセージをご記入ください..." required></textarea>
+                    <br>
+                    <button type="submit" id="submit-btn">送信する</button>
+                </form>
+            </div>
         </div>
+
     </div>
 
     <script>
@@ -146,13 +173,13 @@
             { jp: "自分のことを考えるのも大切ですが、<br>相手のことを自分のこととして考えるのは<br>もっと大切です。<br>優しく、温かく、寄り添い、<br>誰かのために尽くせる人は、仏さまに大切にされます。", image: "bg17.jpg" },
             { jp: "生まれてから今日まで、どれほど多くの人<br>があなたを助け、愛を注いでくれたか<br>を思い出してください。<br>みんなの命は、家族にとっても、<br>友人にとっても、そして私にとっても、<br>かけがえのない大切なものです。", image: "bg18.jpg" },
             { jp: "完璧な人など、この世に一人もいません。", image: "bg19.jpg" },
-            { jp: "モノを大切にしましょう。<br>すべてのモノに命があります。<br>モノを大切にすれば、大切にされたモノがあなたを守ってくれます。<br>自然と自分、道具と人――<br>すべては一つにつながっています。", image: "bg20.jpg" },
+            { jp: "モノを大切にしましょう。<br>すべてのモノに命があります。<br>モノを大切にすれば、大切にされたモノがあなたを守ってくれます。<br>自然と自分、道具と人――<br>すべては一つつながっています。", image: "bg20.jpg" },
             { jp: "相手の気持ちを理解するためには、<br>同じ経験をしなければならないのでしょうか？<br>私はそうは思いません。<br>苦しみや悲しみを和らげたい、<br>少しでも分かち合いたいという誠実な心があれば、私たちはつながることができます。", image: "bg21.jpg" },
             { jp: "穏やかで温かい笑顔で<br>相手を迎えることを、<br>「和顔施（わがんせ）」と言います。<br>笑顔で迎えられたら、<br>あなたも嬉しいでしょう？<br>これは仏教における<br>大切な実践の一つです。", image: "bg22.jpg" },
             { jp: "良い行いをするには、最初は続けるために<br>意識的な努力が必要かもしれません。<br>何度も自分に言い聞かせているうちに、<br>良い行いは自然と「習慣」になります。<br>その瞬間、素晴らしい自分に出会うことができるでしょう。", image: "bg23.jpg" }
         ];
 
-        // 🔗 GAS Web App URL (★作成したGASのWebアプリURLに差し替えてください★)
+        // 🔗 GAS Web App URL
         const gasUrl = 'https://script.google.com/macros/s/AKfycbz27VJEIDm_tBf4iYYj5HYLsz7suTl1EXopg-vAhFeWoi1-aSanvAtIF3AZMTSmDv93/exec';
 
         function getOrCreateDeviceId() {
@@ -184,11 +211,11 @@
             document.getElementById("content-body").innerHTML = htmlContent;
         }
 
-        // 📡 自動アクセスログ送信 (no-corsを取り除き、確実に1回だけカウント)
+        // 📡 自動アクセスログ送信
         function sendAutoAccessLog() {
             const payload = { 
                 type: "access", 
-                lang: "jp",       // 👈 GAS側のC列 (JP) にカウントを加算するため明示
+                lang: "jp",       
                 status: "Auto",   
                 country: "Auto",  
                 deviceId: getOrCreateDeviceId()
@@ -214,14 +241,14 @@
             const submitBtn = document.getElementById('submit-btn');
             if (submitBtn) { 
                 submitBtn.innerText = "Sending..."; 
-                submitBtn.disabled = true; // 送信ボタンを即時無効化（連打防止）
+                submitBtn.disabled = true; 
             }
 
             const formData = new FormData(form);
             const payload = Object.fromEntries(formData);
             
             payload.type = "message";
-            payload.lang = "jp"; // 👈 日本語のメッセージであることを指定
+            payload.lang = "jp"; 
             payload.status = "Auto";
             payload.country = "Auto";
             payload.deviceId = getOrCreateDeviceId();
@@ -232,8 +259,7 @@
                 body: JSON.stringify(payload)
             })
             .then(res => {
-                // 💡 ご希望に合わせ、ポップアップ言語は英語をキープ
-                alert("Your message has been sent.<br>Thank you.");
+                alert("Your message has been sent.\nThank you.");
                 form.reset();
                 document.getElementById('message-form-container').style.display = 'none';
                 const actionBtn = document.getElementById('action-btn');

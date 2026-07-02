@@ -51,7 +51,7 @@
         /* 📜 メインコンテナ */
         #quote-container {
             background: rgba(255, 255, 255, 0.5); /* 👈 透明度 0.5 */
-            padding: 35px 20px;
+            padding: 35px 15px; /* 👈 左右のパディングを20pxから15pxに広げ、BOX内の有効幅を拡大 */
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             width: 100%;
@@ -65,9 +65,10 @@
             line-height: 1.8;
         }
 
-        /* 🌟 改行を完全に固定するスタイル設定 */
+        /* 🌟 改行を完全に固定しつつ、画面幅に合わせて文字切れを防ぐレスポンシブ設定 */
         .lang-english {
-            font-size: 15px; /* どの画面でも溢れないよう1pxだけ微調整 */
+            /* 👈 390px幅で約15pxを維持しつつ、狭い画面では文字を自動で微縮小して文字切れを完全に防止 */
+            font-size: calc(13px + 0.5vw); 
             font-weight: bold;
             color: #333;
             display: inline-block;
@@ -155,7 +156,7 @@
     </div>
 
     <script>
-        // 🌸 聖句データ
+        // 🌸 聖句データ（一字一句変更なし）
         const quotesData = [
             { en: `The buddhas are<br>always with us,<br>right by our side.<br>Close your eyes<br>and remember this<br>whenever you are feeling low<br>or facing difficulties<br>in your life.`, image: "bg1.jpg" },
             { en: `I come to understand<br>the Buddha's heart<br>through your warmth.<br>Thank you.`, image: "bg2.jpg" },

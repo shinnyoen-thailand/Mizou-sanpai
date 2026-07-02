@@ -65,11 +65,14 @@
             line-height: 1.8;
         }
 
+        /* 🌟 改行を完全に固定するスタイル設定 */
         .lang-english {
-            font-size: 16px;
+            font-size: 15px; /* どの画面でも溢れないよう1pxだけ微調整 */
             font-weight: bold;
             color: #333;
-            word-break: break-word;
+            display: inline-block;
+            text-align: center;
+            white-space: nowrap; /* 👈 ブラウザによる勝手な自動改行を「禁止」します */
         }
 
         #action-btn {
@@ -152,7 +155,7 @@
     </div>
 
     <script>
-        // 🌸 聖句データ（アポストロフィ対策としてすべて `` で囲う安全方式に統一）
+        // 🌸 聖句データ
         const quotesData = [
             { en: `The buddhas are<br>always with us,<br>right by our side.<br>Close your eyes<br>and remember this<br>whenever you are feeling low<br>or facing difficulties in your life.`, image: "bg1.jpg" },
             { en: `I come to understand<br>the Buddha's heart<br>through your warmth.<br>Thank you.`, image: "bg2.jpg" },
@@ -194,7 +197,7 @@
         window.onload = function() {
             try {
                 refreshQuote();
-                sendAutoAccessLog(); // バックグラウンド自動アクセス送信
+                sendAutoAccessLog(); 
             } catch (error) {
                 console.error("Initialization error:", error);
             }
@@ -211,7 +214,6 @@
             document.getElementById("content-body").innerHTML = htmlContent;
         }
 
-        // 📡 自動アクセスログ送信
         function sendAutoAccessLog() {
             const payload = { 
                 type: "access", 
@@ -234,7 +236,6 @@
             document.getElementById('action-btn').style.display = 'none';
         }
 
-        // 📤 メッセージフォーム送信処理
         const form = document.getElementById('thank-you-form');
         form.addEventListener('submit', function(e) {
             e.preventDefault();

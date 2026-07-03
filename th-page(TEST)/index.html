@@ -72,10 +72,9 @@
             line-height: 1.8;
         }
 
-        /* 🌟 文字サイズ・フォントはそのまま、可読性だけを劇的に上げる設定 */
-     /* 🌟 文字サイズ感は変えず、変な改行だけを防ぐ安全な設定 */
+/* 🌟 文字の大きさ・美しさはそのまま、横の広がりだけをタイトにして変な改行を防ぐ設定 */
         .lang-thai {
-            font-size: calc(13px + 0.7vw); /* 👈 calc(12px + 1vw) から微調整。見た目の大きさはほぼ同じです */
+            font-size: calc(13px + 0.7vw); /* サイズ感は維持 */
             font-weight: bold;
             color: #222222;
             display: block; 
@@ -83,6 +82,11 @@
             white-space: normal; 
             word-break: break-word; 
             
+            /* 💡 【新設】文字の横幅を98%にほんの少し縮小し、文字間をわずかに詰める魔法 */
+            letter-spacing: -0.02em;        /* 文字と文字の間隔をほんの少しだけ引き締める */
+            transform: scaleX(0.98);        /* 文字の横幅だけを微細に縮小（縦の大きさはそのまま） */
+            transform-origin: center top;   /* 中央基準で綺麗に縮小 */
+
             /* 白い光彩（キープ） */
             text-shadow: 
                 0 0 8px rgba(255, 255, 255, 0.95),

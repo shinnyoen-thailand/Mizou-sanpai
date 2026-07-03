@@ -21,7 +21,7 @@
             display: flex;
             justify-content: center;
             align-items: center; 
-            font-family: 'Krub', sans-serif; /* 全体のフォントを Krub に指定 */
+            font-family: 'Krub', sans-serif;
             text-align: center;
             background-size: cover;
             background-position: center;
@@ -33,11 +33,11 @@
 
         /* 📦 タイトルとお言葉コンテナをまとめる外枠 */
         #wrapper {
-            max-width: 425px; 
+            max-width: 415px; 
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 12px; /* 上下の箱のすき間 */
+            gap: 12px;
         }
 
         /* 🏷️ 独立したタイトル専用コンテナ（透明度 0.5） */
@@ -48,17 +48,15 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             font-weight: bold;
             color: #444;
-            
-            /* 🌟 タイ語タイトルが絶対に文字切れせず、必ず2行にする魔法の設定 */
-            font-size: calc(12px + 0.6vw); /* 画面幅に合わせて文字サイズを自動で最適化 */
-            white-space: nowrap;          /* 予期せぬ3行目への崩れを防止 */
+            font-size: calc(12px + 0.6vw); 
+            white-space: nowrap;          
             line-height: 1.5;
         }
 
-           /* 📜 メインコンテナ */
+        /* 📜 メインコンテナ（背景の白透明は維持、文字装飾は廃止） */
         #quote-container {
             background: rgba(255, 255, 255, 0.5);
-            padding: 35px 20px; 
+            padding: 35px 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             width: 100%;
@@ -70,28 +68,18 @@
         .lang-block {
             margin-bottom: 0;
             line-height: 1.8;
+            width: 100%;
         }
 
-/* 🌟 文字の大きさ・美しさはそのまま、横の広がりだけをタイトにして変な改行を防ぐ設定 */
+        /* 🌟 <br> 以外での改行を100%禁止する設定 */
         .lang-thai {
-            font-size: calc(13px + 0.7vw); /* サイズ感は維持 */
             font-weight: bold;
-            color: #222222;
+            color: #333333;             /* 影などの装飾コードは全廃止 */
             display: block; 
             text-align: center;
-            white-space: normal; 
-            word-break: break-word; 
-            
-            /* 💡 【新設】文字の横幅を98%にほんの少し縮小し、文字間をわずかに詰める魔法 */
-            letter-spacing: -0.02em;        /* 文字と文字の間隔をほんの少しだけ引き締める */
-            transform: scaleX(0.98);        /* 文字の横幅だけを微細に縮小（縦の大きさはそのまま） */
-            transform-origin: center top;   /* 中央基準で綺麗に縮小 */
-
-            /* 白い光彩（キープ） */
-            text-shadow: 
-                0 0 8px rgba(255, 255, 255, 0.95),
-                0 0 4px rgba(255, 255, 255, 0.8),
-                0 0 1px rgba(255, 255, 255, 0.5);
+            white-space: nowrap;        /* 👈 <br> 以外の自動改行を完全に禁止 */
+            width: 100%;
+            box-sizing: border-box;
         }
 
         #action-btn {
@@ -154,7 +142,7 @@
     <!-- 📦 全体を綺麗に整列させるための外枠 -->
     <div id="wrapper">
         
-        <!-- 🏷️ 必ず指定位置で美しく2行になり、Krubフォントで文字切れせず縮小するタイ語タイトル -->
+        <!-- 🏷️ タイ語タイトル -->
         <div id="title-container">
             ข้อความจากท่าน<br>ชินเนียวเคอิชู
         </div>
@@ -181,34 +169,33 @@
     </div>
 
     <script>
-        // 🌸 聖句データ（タイ語版 23メッセージ / ご提示いただいた通り一字一句・改行位置すべて完全一致）
+        // 🌸 聖句データ（ご提示いただいたテキストを一字ക്കുറിച്ച്変えずにそのまま使用）
         const quotesData = [
             { th: "ปวงพระพุทธเจ้าสถิตอยู่เคียงข้างเราเสมอ<br>หลับตาและระลึกถึงสิ่งนี้ไว้<br>เมื่อใดก็ตามที่รู้สึกท้อแท้<br>หรือกำลังเผชิญกับความยากลำบากในชีวิต", image: "bg1.jpg" },
             { th: "ฉันได้รับรู้ถึงจิตใจของพระพุทธองค์<br>ผ่านความอ่อนโยนและความเมตตาของคุณ<br>ขอบคุณมาก", image: "bg2.jpg" },
             { th: "การสื่อสารเป็นสิ่งที่สำคัญมาก<br>“อรุณสวัสดิ์” “สวัสดี”<br>เรามาเริ่มต้นด้วยการกล่าวทักทายกันเถอะ", image: "bg3.jpg" },
-            { th: "ความพยายามอย่างเต็มที่เป็นสิ่งวิเศษ<br>แต่อาจจะเหนื่อยล้า<br>หากเราพยายามอย่างหนักเกินไปตั้งแต่ต้น<br>ตั้งเป้าหมายที่ทำได้<br>และก้าวไปข้างหน้าทีละน้อยจะดีกว่า", image: "bg4.jpg" },
-            { th: "พระพุทธองค์สถิตอยู่ในใจของทุกคน<br>พวกเราทุกคนล้วนปรารถนา<br>ที่จะมีจิตใจดีงาม&nbsp;ช่วยเหลือผู้อื่น&nbsp;และมีความจริงใจ<br>เมื่อใดก็ตามที่เรามีความรู้สึกดี&nbsp;ๆ&nbsp;เช่นนี้<br>นั่นคือเราได้พบกับพุทธะที่อยู่ในใจของเรา", image: "bg5.jpg" },
+            { th: "ความพยายามอย่างเต็มที่เป็นสิ่งวิเศษ<br>แต่อาจจะเหนื่อยล้า หากเราพยายามอย่างหนักเกินไปตั้งแต่ต้น<br>ตั้งเป้าหมายที่ทำได้ <br>และก้าวไปข้างหน้าทีละน้อยจะดีกว่า", image: "bg4.jpg" },
+            { th: "พระพุทธองค์สถิตอยู่ในใจของทุกคน<br>พวกเราทุกคนล้วนปรารถนา<br>ที่จะมีจิตใจดีงาม ช่วยเหลือผู้อื่น และมีความจริงใจ<br>เมื่อใดก็ตามที่เรามีความรู้สึกดี ๆ เช่นนี้<br>นั่นคือเราได้พบกับพุทธะที่อยู่ในใจของเรา", image: "bg5.jpg" },
             { th: "ผู้ที่สามารถสะท้อนมองตนเองได้นั้น<br>เป็นผู้ที่มีจิตใจอันบริสุทธิ์", image: "bg6.jpg" },
-            { th: "เราชอบที่จะมีรูปร่างหน้าตาดี<br>แต่สิ่งนั้นเพียงอย่างเดียว<br>ไม่ใช่คำจำกัดความของคำว่าสวยงาม<br>ด้วยคำพูดและการกระทำที่จริงใจ<br>ใคร ๆ ก็สามารถเป็นคนที่สวยงามอย่างแท้จริงได้ ", image: "bg7.jpg" },
+            { th: "เราชอบที่จะมีรูปร่างหน้าตาดี<br>แต่สิ่งนั้นเพียงอย่างเดียว<br>ไม่ใช่คำจำกัดความของคำว่าสวยงาม<br>ด้วยคำพูดและการกระทำที่จริงใจ<br>ใคร ๆ ก็สามารถเป็นคนที่สวยงามอย่างแท้จริงได้", image: "bg7.jpg" },
             { th: "ความร่าเริง ความจริงใจ<br>ความเมตตา ความอบอุ่น<br> – พวกเราแต่ละคนมีบางสิ่งพิเศษ<br>ที่สามารถมอบให้แก่ผู้อื่นได้", image: "bg8.jpg" },
             { th: "การมีพลังที่จะพยายามอย่างเต็มที่<br>หรือความปรารถนาที่จะทำให้ดียิ่งขึ้น<br>นำความสุขมาให้", image: "bg9.jpg" },
             { th: "บางครั้งเรารู้สึกเครียด<br>เมื่อฉันรู้สึกเช่นนั้น<br>ฉันจะหายใจเข้าลึก ๆ<br>แล้วก็พร้อมที่จะพยายามอย่างเต็มที่อีกครั้ง", image: "bg10.jpg" },
             { th: "ปวงพระพุทธเจ้า<br>นำทางให้เราได้พบพานกับผู้คน<br>ณ เวลาและสถานที่นั้น ๆ<br>ด้วยเหตุผลอะไรบางอย่าง", image: "bg11.jpg" },
             { th: "จิตใจของเราเปล่งประกาย<br>ทุกครั้งที่เรารู้สึกกตัญญูขอบคุณ", image: "bg12.jpg" },
             { th: "อย่าคิดว่า “ฉันไม่มีอะไรจะมอบให้!”<br>ปวงพระพุทธเจ้าและผู้คนมากมายเชื่อมั่นในตัวคุณ<br>มองไปข้างหน้าและคิดในแง่บวก<br>เพียงแค่ทำอย่างเต็มที่<br>แล้วคุณจะไม่เสียใจภายหลัง", image: "bg13.jpg" },
-            { th: "เราสามารถที่จะเห็นอกเห็นใจ<br>เฉพาะผู้ที่มีประสบการณ์ตรงกับเราเท่านั้นหรือ?<br>ฉันคิดว่าเราสามารถจะเชื่อมต่อกับผู้อื่นได้<br>ตราบเท่าที่เราเปิดใจ<br>พยายามทำความเข้าใจ<br>และช่วยบรรเทาความเจ็บปวดของพวกเขา", image: "bg14.jpg" },
+            { th: "เราสามารถที่จะเห็นอกเห็นใจเฉพาะผู้ที่มีประสบการณ์ตรงกับเราเท่านั้นหรือ?<br>ฉันคิดว่าเราสามารถจะเชื่อมต่อกับผู้อื่นได้<br>ตราบเท่าที่เราเปิดใจ พยายามทำความเข้าใจ<br>และช่วยบรรเทาความเจ็บปวดของพวกเขา", image: "bg14.jpg" },
             { th: "การคำนึงถึงผู้อื่น<br>หมายถึงการเอาใจเขามาใส่ใจเรา<br>และเข้าอกเข้าใจผู้อื่น", image: "bg15.jpg" },
-            { th: "เมื่อบางสิ่งเกิดขึ้นและทำให้ฉันรู้สึกแย่<br>ฉันจะบอกกับตัวเองให้หลุดออกจากความรู้สึกนั้น<br>โดยกล่าวว่า&nbsp;“ไม่มีประโยชน์อะไรที่จะร้องไห้<br>คร่ำครวญถึงน้ำนมที่หกไปแล้ว!<br>คราวหน้าฉันจะระมัดระวังให้มากขึ้นและทำให้ดีขึ้นกว่านี้”", image: "bg16.jpg" },
+            { th: "เมื่อบางสิ่งเกิดขึ้นและทำให้ฉันรู้สึกแย่<br>ฉันจะบอกกับตัวเองให้หลุดออกจากความรู้สึกนั้น<br>โดยกล่าวว่า “ไม่มีประโยชน์อะไร<br>ที่จะร้องไห้คร่ำครวญถึงน้ำนมที่หกไปแล้ว!<br>คราวหน้าฉันจะระมัดระวังให้มากขึ้น<br>และทำให้ดีขึ้นกว่านี้”", image: "bg16.jpg" },
             { th: "การพิจารณาความต้องการของตนเองเป็นสิ่งสำคัญ<br>แต่การคิดถึงผู้อื่นมีความสำคัญยิ่งกว่า<br>ปวงพระพุทธเจ้าจะดูแลเรา<br>เมื่อเราพยายามเป็นคนที่ใจดี อบอุ่น<br>ช่วยเหลือผู้อื่น และอุทิศตนเพื่อผู้อื่น", image: "bg17.jpg" },
             { th: "จงอย่าลืมว่ามีผู้คนมากมายที่ช่วยเรา<br>และรักเราตั้งแต่วันที่เราเกิดมา<br>ชีวิตของเรามีความสำคัญ<br>สำหรับครอบครัว เพื่อน และตัวฉัน", image: "bg18.jpg" },
             { th: "ไม่มีใครสมบูรณ์แบบ", image: "bg19.jpg" },
             { th: "ขอให้ปฏิบัติกับทุกสิ่ง<br>เหมือนกับว่าสิ่งนั้นมีชีวิตและมีค่าสำหรับการดูแล<br>ยิ่งเห็นคุณค่าของทุกสิ่งรอบ ๆ ตัวเท่าใด<br>ชีวิตของเราก็จะได้รับพระพรมากขึ้นเท่านั้น<br>ธรรมชาติและตัวเรา สิ่งของและผู้คน<br>– ล้วนเป็นหนึ่งเดียวกัน", image: "bg20.jpg" },
             { th: "บ่อยครั้งเราพบกับปัญหาทางด้านการสื่อสาร<br>เมื่อใดก็ตามที่สิ่งนี้เกิดขึ้น<br>ให้ฟังความคิดเห็นของคนอื่น<br>ก่อนที่จะออกความคิดเห็นของตัวเอง<br>นั่นจะทำให้ทั้งสองคนใกล้ชิดกันมากขึ้น", image: "bg21.jpg" },
             { th: "ทุกคนชอบการต้อนรับด้วยรอยยิ้ม<br>การมอบรอยยิ้มอันอบอุ่นเป็นส่วนสำคัญ<br>ในการฝึกปฏิบัติทางพุทธศาสนาด้วยเช่นกัน<br>เป็นรูปแบบหนึ่งของ “ทานบารมี”", image: "bg22.jpg" },
-            { th: "เมื่อเราพยายามทำสิ่งที่ดี<br>เราอาจต้องพยายามอย่างมีสติ<br>เพื่อที่จะทำตามให้สำเร็จก่อน<br>ในที่สุด มันก็จะกลายเป็นนิสัยของเรา<br>โดยธรรมชาติ<br>แล้วเราจะพบความงดงามอยู่ในตัว", image: "bg23.jpg" }
+            { th: "เมื่อเราพยายามทำสิ่งที่ดี<br>เราอาจต้องพยายามอย่างมีสติเพื่อที่จะทำตามให้สำเร็จก่อน<br>ในที่สุด มันก็จะกลายเป็นนิสัยของเราโดยธรรมชาติ<br>แล้วเราจะพบความงดงามอยู่ในตัว", image: "bg23.jpg" }
         ];
 
-        // 🔗 GAS Web App URL
         const gasUrl = 'https://script.google.com/macros/s/AKfycbz27VJEIDm_tBf4iYYj5HYLsz7suTl1EXopg-vAhFeWoi1-aSanvAtIF3AZMTSmDv93/exec';
 
         function getOrCreateDeviceId() {
@@ -223,12 +210,13 @@
         window.onload = function() {
             try {
                 refreshQuote();
-                sendAutoAccessLog(); // 自動アクセスログの送信
+                sendAutoAccessLog(); 
             } catch (error) {
                 console.error("Initialization error:", error);
             }
         };
 
+        // 🌟 改行位置を完璧に守りつつ、はみ出さないように文字サイズを自動調整する処理
         function refreshQuote() {
             if (quotesData.length === 0) return;
             const randomIndex = Math.floor(Math.random() * quotesData.length);
@@ -236,15 +224,55 @@
             document.body.style.backgroundImage = `url('../${selectedSet.image}')`;
             
             let htmlContent = "";
-            if(selectedSet.th) htmlContent += `<div class="lang-block lang-thai">${selectedSet.th}</div>`;
-            document.getElementById("content-body").innerHTML = htmlContent;
+            if(selectedSet.th) {
+                // <br> で文章をばらばらに分解
+                const lines = selectedSet.th.split(/<br\s*\/?>/i);
+                // 1行ずつ nowrap（自動改行禁止）の器に入れる
+                const formattedLines = lines.map(line => `<div class="lang-thai">${line}</div>`).join('');
+                htmlContent += `<div class="lang-block">${formattedLines}</div>`;
+            }
+            
+            const container = document.getElementById("content-body");
+            container.innerHTML = htmlContent;
+
+            // 💡 ここからが魔法：画面幅に合わせて文字サイズを自動で縮小フィットさせるJavaScript
+            const quoteContainer = document.getElementById("quote-container");
+            const thaiLines = container.getElementsByClassName("lang-thai");
+            
+            // 利用可能な最大の横幅（左右の余白 padding 分を引く）
+            const maxWidth = quoteContainer.clientWidth - 40; 
+            
+            // ベースとなる初期フォントサイズ（19px）
+            let currentFontSize = 19; 
+
+            // まずすべての行を一旦初期サイズにする
+            for (let line of thaiLines) {
+                line.style.fontSize = currentFontSize + "px";
+            }
+
+            // 枠からはみ出る行がなくなるまで、1pxずつフォントサイズを小さくループ処理する
+            let hasOverflow = true;
+            while (hasOverflow && currentFontSize > 10) {
+                hasOverflow = false;
+                for (let line of thaiLines) {
+                    if (line.scrollWidth > maxWidth) {
+                        hasOverflow = true;
+                        break;
+                    }
+                }
+                if (hasOverflow) {
+                    currentFontSize--;
+                    for (let line of thaiLines) {
+                        line.style.fontSize = currentFontSize + "px";
+                    }
+                }
+            }
         }
 
-        // 📡 自動アクセスログ送信 (GAS側のタイ語集計用)
         function sendAutoAccessLog() {
             const payload = { 
                 type: "access", 
-                lang: "thai",     /* GAS側でタイ語(B列)に加算させるための識別子 */
+                lang: "thai",     
                 status: "Auto",   
                 country: "Auto",  
                 deviceId: getOrCreateDeviceId()
@@ -263,7 +291,6 @@
             document.getElementById('action-btn').style.display = 'none';
         }
 
-        // 📤 感謝のメッセージフォーム送信処理
         const form = document.getElementById('thank-you-form');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -277,7 +304,7 @@
             const payload = Object.fromEntries(formData);
             
             payload.type = "message";
-            payload.lang = "thai"; /* タイ語版メッセージとして送信 */
+            payload.lang = "thai"; 
             payload.status = "Auto";
             payload.country = "Auto";
             payload.deviceId = getOrCreateDeviceId();
@@ -288,7 +315,6 @@
                 body: JSON.stringify(payload)
             })
             .then(res => {
-                // ポップアップの通知テキストは英語（要件）のままキープ
                 alert("Your message has been sent.\nThank you.");
                 form.reset();
                 document.getElementById('message-form-container').style.display = 'none';

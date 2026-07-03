@@ -37,16 +37,19 @@
 
         /* 🏷️ 新設：独立したタイトル専用コンテナ */
         #title-container {
-            background: rgba(255, 255, 255, 0.5); /* 👈 透明度 0.5 */
+            background: rgba(255, 255, 255, 0.5);
             padding: 12px 20px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            font-size: 13px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #444;
-        }
+
+          /* 🌟 どんな画面サイズにも対応させるための2行 */
+    font-size: calc(11px + 0.6vw); /* 👈 画面が狭くなると、文字が自動で縮小して枠内に収まります */
+    white-space: nowrap;          /* 👈 これにより「Keishu」だけの意図しない3行目落ちは防ぎます */
+}
 
         /* 📜 メインコンテナ */
         #quote-container {
@@ -133,7 +136,10 @@
 
     <div id="wrapper">
         
-        <div id="title-container">Message from Her Holiness Shinnyo Keishu</div>
+        <!-- 🏷️ 独立したタイトル専用コンテナ -->
+        <div id="title-container">
+            Message from Her Holiness<br>Shinnyo Keishu
+        </div>
 
         <div id="quote-container">
             <div id="content-body">Loading...</div>

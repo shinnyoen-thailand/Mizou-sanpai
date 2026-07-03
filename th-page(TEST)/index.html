@@ -55,15 +55,15 @@
             line-height: 1.5;
         }
 
-        /* 📜 メインコンテナ */
+           /* 📜 メインコンテナ */
         #quote-container {
             background: rgba(255, 255, 255, 0.5);
-            padding: 35px 12px; /* 左右のパディングを12pxに調整し、タイ語の横幅を最大限確保 */
+            padding: 35px 20px; 
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             width: 100%;
             box-sizing: border-box;
-            max-height: 75vh; /* タイトルの分、高さを少し調整 */
+            max-height: 75vh; 
             overflow-y: auto;
         }
 
@@ -72,16 +72,21 @@
             line-height: 1.8;
         }
 
-        /* 🌟 改行を固定しつつ、タイ語が画面外にはみ出るのを完全に防ぐ設定 */
+        /* 🌟 文字サイズ・フォントはそのまま、可読性だけを劇的に上げる設定 */
         .lang-thai {
-            /* 最大幅390pxの時に約15pxを維持しつつ、画面幅が狭まると自動で縮小して文字切れを防止 */
-            font-size: calc(11px + 1vw); 
+            font-size: calc(12px + 1vw); /* サイズ変更なし */
             font-weight: bold;
-            color: #333;
-            display: inline-block;
+            color: #222222;              /* 視認性のために少しだけ黒をハッキリに */
+            display: block; 
             text-align: center;
-            /* 自動改行を完全に禁止し、指定した <br> のみで改行させる設定 */
-            white-space: nowrap; 
+            white-space: normal; 
+            word-break: break-word; 
+            
+            /* 👇 ここを追加：文字の周りに白いベールを纏わせ、背景の絵と分離させます */
+            text-shadow: 
+                0 0 8px rgba(255, 255, 255, 0.95),
+                0 0 4px rgba(255, 255, 255, 0.8),
+                0 0 1px rgba(255, 255, 255, 0.5);
         }
 
         #action-btn {

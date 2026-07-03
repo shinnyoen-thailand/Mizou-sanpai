@@ -73,16 +73,17 @@
         }
 
         /* 🌟 文字サイズ・フォントはそのまま、可読性だけを劇的に上げる設定 */
+     /* 🌟 文字サイズ感は変えず、変な改行だけを防ぐ安全な設定 */
         .lang-thai {
-            font-size: calc(12px + 1vw); /* サイズ変更なし */
+            font-size: calc(13px + 0.7vw); /* 👈 calc(12px + 1vw) から微調整。見た目の大きさはほぼ同じです */
             font-weight: bold;
-            color: #222222;              /* 視認性のために少しだけ黒をハッキリに */
+            color: #222222;
             display: block; 
             text-align: center;
             white-space: normal; 
             word-break: break-word; 
             
-            /* 👇 ここを追加：文字の周りに白いベールを纏わせ、背景の絵と分離させます */
+            /* 白い光彩（キープ） */
             text-shadow: 
                 0 0 8px rgba(255, 255, 255, 0.95),
                 0 0 4px rgba(255, 255, 255, 0.8),

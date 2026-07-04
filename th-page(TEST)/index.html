@@ -40,17 +40,30 @@
             gap: 12px;
         }
 
-        /* 🏷️ 独立したタイトル専用コンテナ（透明度 0.5） */
+        /* 🏷️ 独立したタイトル専用コンテナ（サイズアップ＆白ぼかし強化） */
         #title-container {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.75); /* 👈 透明度を0.5から0.75に上げて白を少し濃くしました */
+            padding: 16px 20px;                     /* 上下の余白を広げてゆったりと */
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            
+            /* 💡 後ろの白ぼかし・立体感を強調するシャドウ */
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0,0,0,0.1);
+            
             font-weight: bold;
-            color: #444;
-            font-size: calc(12px + 0.6vw); 
-            white-space: nowrap;          
-            line-height: 1.5;
+            color: #222222;                         /* 文字色を少し濃くして見やすく */
+            
+            /* 💡 文字サイズを大きく（元のcalc(12px + 0.6vw)からサイズアップ） */
+            font-size: calc(16px + 0.8vw); 
+            line-height: 1.4;
+            
+            /* 💡 縦幅を固定せず、文字量に応じて自動で広がる設定 */
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+            
+            /* <br> による2行の改行を綺麗に保つ設定 */
+            white-space: normal; 
+            word-break: keep-all;
         }
 
         /* 📜 メインコンテナ（背景の白透明は維持、文字装飾は廃止） */
